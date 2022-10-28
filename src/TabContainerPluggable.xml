@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget id="mendix.tabcontainerpluggable.TabContainerPluggable" pluginWidget="true" needsEntityContext="true" offlineCapable="true"
+        supportedPlatform="Web"
+        xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
+    <name>Tab Container Pluggable</name>
+    <description>Tab container that allows dynamically controlling which tab is shown by default and other tabs are NOT rendered when hidden</description>
+    <helpUrl>https://github.com/bsgriggs/mendix9-searchable-reference-selector/blob/master/README.md</helpUrl>
+    <properties>
+        <propertyGroup caption="Tabs">
+            <property key="defaultTabIndex" type="expression" defaultValue="0" required="true">
+                <caption>Default Tab Index</caption>
+                <description>The index of the tab to by default. Can also be used to change the current tab from outside the widget.</description>
+                <returnType type="Integer" />
+            </property>
+            <property key="tabListType" type="enumeration" defaultValue="static">
+                <caption>Tab List Type</caption>
+                <description></description>
+                <enumerationValues>
+                    <enumerationValue key="static">Static</enumerationValue>
+                    <enumerationValue key="dynamic">Dynamic</enumerationValue>
+                </enumerationValues>
+            </property>
+            <property key="tabBadgeStyle" type="enumeration" defaultValue="default">
+                <caption>Button Style</caption>
+                <description></description>
+                <enumerationValues>
+                    <enumerationValue key="default">Default</enumerationValue>
+                    <enumerationValue key="inverse">Inverse</enumerationValue>
+                    <enumerationValue key="primary">Primary</enumerationValue>
+                    <enumerationValue key="info">Info</enumerationValue>
+                    <enumerationValue key="success">Success</enumerationValue>
+                    <enumerationValue key="warning">Warning</enumerationValue>
+                    <enumerationValue key="danger">Danger</enumerationValue>
+                </enumerationValues>
+            </property>
+            <property key="tabList" type="object" isList="true">
+                <caption>Tab List</caption>
+                <description/>
+                <properties>
+                    <propertyGroup caption="Object list group">
+                        <property key="tabCaptionType" type="enumeration" defaultValue="text">
+                            <caption>Caption Type</caption>
+                            <description></description>
+                            <enumerationValues>
+                                <enumerationValue key="text">Text</enumerationValue>
+                                <enumerationValue key="html">HTML</enumerationValue>
+                                <enumerationValue key="custom">Custom</enumerationValue>
+                            </enumerationValues>
+                        </property>
+                        <property key="tabCaptionText" type="textTemplate">
+                            <caption>Caption Text</caption>
+                            <description>Content displayed as this tab's name </description>
+                            <translations>
+                                <translation lang="en_US">New Tab</translation>
+                            </translations>
+                        </property>
+                        <property key="tabCaptionHTML" type="textTemplate">
+                            <caption>Caption HTML</caption>
+                            <description>Content displayed as this tab's name </description>
+                            <translations>
+                                <translation lang="en_US">New Tab</translation>
+                            </translations>
+                        </property>
+                        <property key="tabCaptionContent" type="widgets">
+                            <caption>Caption Content</caption>
+                            <description></description>
+                        </property>
+                        <property key="tabVisible" type="expression" defaultValue="true">
+                            <caption>Tab Visible</caption>
+                            <description>Whether or not this tab is visable</description>
+                            <returnType type="Boolean" />
+                        </property>
+                        <property key="tabSort" type="expression" defaultValue="1" required="true">
+                            <caption>Tab Sort</caption>
+                            <description>The order this tab appears to others (Ascending)</description>
+                            <returnType type="Integer" />
+                        </property>
+                        <property key="tabContent" type="widgets">
+                            <caption>Content</caption>
+                            <description></description>
+                        </property>
+                        <property key="tabBadge" type="textTemplate" required="false">
+                            <caption>Tab Badge</caption>
+                            <description>A small badge on the top right of the tab</description>
+                            <translations>
+                                <translation lang="en_US"></translation>
+                            </translations>
+                        </property>
+                        <property key="onTabClick" type="action" required="false">
+                            <caption>On Click</caption>
+                            <description>Action when the user clicks on this tab</description>
+                        </property>
+                    </propertyGroup>
+                </properties>
+            </property>
+            <property key="tabDatasource" type="datasource" isList="true">
+                <caption>Tab Datasource</caption>
+                <description></description>
+            </property>
+            <property key="tabCaptionTypeDynamic" type="enumeration" defaultValue="text">
+                <caption>Caption Type</caption>
+                <description></description>
+                <enumerationValues>
+                    <enumerationValue key="text">Text</enumerationValue>
+                    <enumerationValue key="html">HTML</enumerationValue>
+                </enumerationValues>
+            </property>
+            <property key="tabCaptionTextDynamic" type="textTemplate" dataSource="tabDatasource">
+                <caption>Caption Text</caption>
+                <description>Content displayed as this tab's name </description>
+                <translations>
+                    <translation lang="en_US">New Tab</translation>
+                </translations>
+            </property>
+            <property key="tabCaptionHTMLDynamic" type="textTemplate" dataSource="tabDatasource">
+                <caption>Caption HTML</caption>
+                <description>Content displayed as this tab's name </description>
+                <translations>
+                    <translation lang="en_US">New Tab</translation>
+                </translations>
+            </property>
+            <property key="tabContentDynamic" type="widgets" dataSource="tabDatasource">
+                <caption>Content</caption>
+                <description></description>
+            </property>
+            <property key="tabBadgeDynamic" type="textTemplate" required="false" dataSource="tabDatasource">
+                <caption>Tab Badge</caption>
+                <description>A small badge on the top right of the tab</description>
+                <translations>
+                    <translation lang="en_US"></translation>
+                </translations>
+            </property>
+            <property key="onTabClickDynamic" type="action" required="false" dataSource="tabDatasource">
+                <caption>On Click</caption>
+                <description>Action when the user clicks on this tab</description>
+            </property>
+        </propertyGroup>
+        <propertyGroup caption="General">
+            <systemProperty key="Name"></systemProperty>
+            <systemProperty key="Visibility"></systemProperty>
+        </propertyGroup>
+    </properties>
+</widget>
