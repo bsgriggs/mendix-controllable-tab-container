@@ -1,9 +1,6 @@
 import { ReactElement, createElement, useState, ReactNode, useEffect } from "react";
 
-import {
-    TabContainerPluggableContainerProps,
-    TabListType
-} from "../typings/TabContainerPluggableProps";
+import { TabContainerPluggableContainerProps, TabListType } from "../typings/TabContainerPluggableProps";
 import { ValueStatus } from "mendix";
 import TabTags from "./components/TabTags";
 import TabContent from "./components/TabContent";
@@ -23,6 +20,7 @@ const sortTabList = (a: TabListType, b: TabListType): number => {
 export function TabContainerPluggable({
     defaultTabIndex,
     tabListType,
+    currentTabStyle,
     tabBadgeStyle,
     tabList,
     tabDatasource,
@@ -32,12 +30,17 @@ export function TabContainerPluggable({
     tabContentDynamic,
     onTabClickDynamic,
     tabBadgeDynamic,
+    tabDirection,
     name,
     style
 }: TabContainerPluggableContainerProps): ReactElement {
     // Map the Dynamic tabs by datasource to the static type
     const convertDatasourceTabs = (): TabListType[] | undefined => {
-        if (tabDatasource !== undefined && tabDatasource.status === ValueStatus.Available && tabDatasource.items !== undefined) {
+        if (
+            tabDatasource !== undefined &&
+            tabDatasource.status === ValueStatus.Available &&
+            tabDatasource.items !== undefined
+        ) {
             return tabDatasource.items.map((objItem, index): TabListType => {
                 return {
                     tabCaptionType: tabCaptionTypeDynamic,
@@ -55,14 +58,16 @@ export function TabContainerPluggable({
                     tabVisible: { status: ValueStatus.Available, value: true },
                     tabBadge: tabBadgeDynamic?.get(objItem),
                     onTabClick: onTabClickDynamic?.get(objItem)
-                }; 
+                };
             });
         }
     };
 
     //filter out any that are not visible then sort
     const adjustTabList = (): TabListType[] | undefined => {
-        return tabListType === "static" ? tabList.filter(tab => tab.tabVisible).sort(sortTabList) : convertDatasourceTabs();
+        return tabListType === "static"
+            ? tabList.filter(tab => tab.tabVisible).sort(sortTabList)
+            : convertDatasourceTabs();
     };
 
     if (defaultTabIndex.status === ValueStatus.Available) {
@@ -71,11 +76,12 @@ export function TabContainerPluggable({
         const [currentTab, setCurrentTab] = useState<ReactNode>();
 
         useEffect(() => {
+            console.info("use Effect", { currentTabIndex, tabList, tabDatasource });
             const newTabList = adjustTabList();
-            if (newTabList !== undefined){
+            if (newTabList !== undefined) {
                 setTabListAdjusted(newTabList);
                 const newCurrentTab = newTabList[currentTabIndex];
-                if (newCurrentTab !== undefined){
+                if (newCurrentTab !== undefined) {
                     setCurrentTab(newCurrentTab.tabContent);
                 }
             }
@@ -92,10 +98,11 @@ export function TabContainerPluggable({
 
         if (tabListAdjusted !== undefined && tabListAdjusted.length > 0) {
             return (
-                <div id={name} className="tcp" style={style}>
+                <div id={name} className={`tcp tcp-${tabDirection}`} style={style}>
                     <TabTags
                         tabList={tabListAdjusted}
                         currentTabIndex={currentTabIndex}
+                        currentTabStyle={currentTabStyle}
                         badgeStyle={tabBadgeStyle}
                         onTabClick={(tab, index) => handleTabClick(tab, index)}
                     />

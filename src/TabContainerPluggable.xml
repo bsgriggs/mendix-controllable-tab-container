@@ -21,19 +21,6 @@
                     <enumerationValue key="dynamic">Dynamic</enumerationValue>
                 </enumerationValues>
             </property>
-            <property key="tabBadgeStyle" type="enumeration" defaultValue="default">
-                <caption>Button Style</caption>
-                <description></description>
-                <enumerationValues>
-                    <enumerationValue key="default">Default</enumerationValue>
-                    <enumerationValue key="inverse">Inverse</enumerationValue>
-                    <enumerationValue key="primary">Primary</enumerationValue>
-                    <enumerationValue key="info">Info</enumerationValue>
-                    <enumerationValue key="success">Success</enumerationValue>
-                    <enumerationValue key="warning">Warning</enumerationValue>
-                    <enumerationValue key="danger">Danger</enumerationValue>
-                </enumerationValues>
-            </property>
             <property key="tabList" type="object" isList="true">
                 <caption>Tab List</caption>
                 <description/>
@@ -134,6 +121,44 @@
             <property key="onTabClickDynamic" type="action" required="false" dataSource="tabDatasource">
                 <caption>On Click</caption>
                 <description>Action when the user clicks on this tab</description>
+            </property>
+        </propertyGroup>
+        <propertyGroup caption="Style">
+            <property key="currentTabStyle" type="enumeration" defaultValue="default">
+                <caption>Current Tab Style</caption>
+                <description></description>
+                <enumerationValues>
+                    <enumerationValue key="default">Default</enumerationValue>
+                    <enumerationValue key="inverse">Inverse</enumerationValue>
+                    <enumerationValue key="primary">Primary</enumerationValue>
+                    <enumerationValue key="info">Info</enumerationValue>
+                    <enumerationValue key="success">Success</enumerationValue>
+                    <enumerationValue key="warning">Warning</enumerationValue>
+                    <enumerationValue key="danger">Danger</enumerationValue>
+                </enumerationValues>
+            </property>
+            <property key="tabBadgeStyle" type="enumeration" defaultValue="default">
+                <caption>Badge Style</caption>
+                <description></description>
+                <enumerationValues>
+                    <enumerationValue key="default">Default</enumerationValue>
+                    <enumerationValue key="inverse">Inverse</enumerationValue>
+                    <enumerationValue key="primary">Primary</enumerationValue>
+                    <enumerationValue key="info">Info</enumerationValue>
+                    <enumerationValue key="success">Success</enumerationValue>
+                    <enumerationValue key="warning">Warning</enumerationValue>
+                    <enumerationValue key="danger">Danger</enumerationValue>
+                </enumerationValues>
+            </property>
+            <property key="tabDirection" type="enumeration" defaultValue="top">
+                <caption>Tab Direction</caption>
+                <description>Where the tabs appear relative to the content</description>
+                <enumerationValues>
+                    <enumerationValue key="top">Top</enumerationValue>
+                    <enumerationValue key="right">Right</enumerationValue>
+                    <enumerationValue key="bottom">Bottom</enumerationValue>
+                    <enumerationValue key="left">Left</enumerationValue>
+                </enumerationValues>
             </property>
         </propertyGroup>
         <propertyGroup caption="General">

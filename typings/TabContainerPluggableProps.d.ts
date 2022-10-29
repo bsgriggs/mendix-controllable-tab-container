@@ -9,8 +9,6 @@ import { Big } from "big.js";
 
 export type TabListTypeEnum = "static" | "dynamic";
 
-export type TabBadgeStyleEnum = "default" | "inverse" | "primary" | "info" | "success" | "warning" | "danger";
-
 export type TabCaptionTypeEnum = "text" | "html" | "custom";
 
 export interface TabListType {
@@ -26,6 +24,12 @@ export interface TabListType {
 }
 
 export type TabCaptionTypeDynamicEnum = "text" | "html";
+
+export type CurrentTabStyleEnum = "default" | "inverse" | "primary" | "info" | "success" | "warning" | "danger";
+
+export type TabBadgeStyleEnum = "default" | "inverse" | "primary" | "info" | "success" | "warning" | "danger";
+
+export type TabDirectionEnum = "top" | "right" | "bottom" | "left";
 
 export interface TabListPreviewType {
     tabCaptionType: TabCaptionTypeEnum;
@@ -46,7 +50,6 @@ export interface TabContainerPluggableContainerProps {
     tabIndex?: number;
     defaultTabIndex: DynamicValue<Big>;
     tabListType: TabListTypeEnum;
-    tabBadgeStyle: TabBadgeStyleEnum;
     tabList: TabListType[];
     tabDatasource: ListValue;
     tabCaptionTypeDynamic: TabCaptionTypeDynamicEnum;
@@ -55,6 +58,9 @@ export interface TabContainerPluggableContainerProps {
     tabContentDynamic: ListWidgetValue;
     tabBadgeDynamic?: ListExpressionValue<string>;
     onTabClickDynamic?: ListActionValue;
+    currentTabStyle: CurrentTabStyleEnum;
+    tabBadgeStyle: TabBadgeStyleEnum;
+    tabDirection: TabDirectionEnum;
 }
 
 export interface TabContainerPluggablePreviewProps {
@@ -64,7 +70,6 @@ export interface TabContainerPluggablePreviewProps {
     readOnly: boolean;
     defaultTabIndex: string;
     tabListType: TabListTypeEnum;
-    tabBadgeStyle: TabBadgeStyleEnum;
     tabList: TabListPreviewType[];
     tabDatasource: {} | { type: string } | null;
     tabCaptionTypeDynamic: TabCaptionTypeDynamicEnum;
@@ -73,4 +78,7 @@ export interface TabContainerPluggablePreviewProps {
     tabContentDynamic: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
     tabBadgeDynamic: string;
     onTabClickDynamic: {} | null;
+    currentTabStyle: CurrentTabStyleEnum;
+    tabBadgeStyle: TabBadgeStyleEnum;
+    tabDirection: TabDirectionEnum;
 }

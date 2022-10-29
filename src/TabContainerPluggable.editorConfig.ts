@@ -1,5 +1,10 @@
-import { TabContainerPluggablePreviewProps } from "../typings/TabContainerPluggableProps";
+import {
+    TabCaptionTypeEnum,
+    TabContainerPluggablePreviewProps,
+    TabListPreviewType
+} from "../typings/TabContainerPluggableProps";
 import { hideNestedPropertiesIn, hidePropertiesIn, hidePropertyIn } from "./utils/PageEditorUtils";
+import { StructurePreviewProps, RowLayoutProps, ContainerProps, TextProps, DropZoneProps } from "./utils/PageEditor";
 
 export type Properties = PropertyGroup[];
 
@@ -111,4 +116,123 @@ export function check(_values: TabContainerPluggablePreviewProps): Problem[] {
     }
     */
     return errors;
+}
+
+export function getPreview(
+    values: TabContainerPluggablePreviewProps,
+    isDarkMode: boolean
+): StructurePreviewProps | null {
+    const titleHeader: RowLayoutProps = {
+        type: "RowLayout",
+        columnSize: "grow",
+        backgroundColor: isDarkMode ? "#4F4F4F" : "#F5F5F5",
+        borderWidth: 1,
+        children: [
+            {
+                type: "Container",
+                padding: 8,
+                children: [
+                    {
+                        type: "Text",
+                        content: "Tab Container Pluggable",
+                        fontColor: isDarkMode ? "#DEDEDE" : "#6B707B"
+                    } as TextProps
+                ]
+            }
+        ]
+    };
+    const tabList = {
+        type: "RowLayout",
+        children: [
+            {
+                type: "Container",
+                padding: 8,
+                children:
+                    values.tabListType === "static"
+                        ? values.tabList.map((tab, index) => {
+                              return {
+                                  type: "Container",
+                                  borders: true,
+                                  borderRadius: 8,
+                                  borderWidth: 2,
+                                  padding: 8,
+                                  children: [
+                                      tab.tabCaptionType !== "custom"
+                                          ? {
+                                                type: "Text",
+                                                content:
+                                                    "TAB: " +
+                                                    (tab.tabCaptionType === "text"
+                                                        ? tab.tabCaptionText
+                                                        : tab.tabCaptionHTML),
+                                                fontSize: 10,
+                                                bold: true,
+                                                fontColor: isDarkMode ? "#DEDEDE" : "#000000"
+                                            }
+                                          : {
+                                                type: "Container",
+                                                children: [
+                                                    {
+                                                        type: "Text",
+                                                        content: `Tab ${index} Caption`,
+                                                        fontSize: 10,
+                                                        bold: true,
+                                                        fontColor: isDarkMode ? "#DEDEDE" : "#000000"
+                                                    },
+                                                    {
+                                                        type: "DropZone",
+                                                        property: tab.tabCaptionContent,
+                                                        placeholder: `Tab ${index} Caption`,
+                                                        grow: 1
+                                                    } as DropZoneProps
+                                                ]
+                                            },
+                                      {
+                                          type: "DropZone",
+                                          property: tab.tabContent,
+                                          placeholder:
+                                              (tab.tabCaptionType === "text"
+                                                  ? tab.tabCaptionText
+                                                  : tab.tabCaptionHTML) + " Content"
+                                      } as DropZoneProps
+                                  ]
+                              };
+                          })
+                        : [
+                              {
+                                  type: "Container",
+                                  borders: true,
+                                  borderRadius: 8,
+                                  borderWidth: 2,
+                                  padding: 8,
+                                  children: [
+                                      {
+                                          type: "Text",
+                                          content:
+                                              "TAB: " +
+                                              //   (values.tabDatasource !== null && values.tabDatasource.type !== undefined ? values.tabDatasource.type : "") +
+                                              (values.tabCaptionTypeDynamic === "text"
+                                                  ? values.tabCaptionTextDynamic
+                                                  : values.tabCaptionHTMLDynamic),
+                                          fontSize: 10,
+                                          bold: true,
+                                          fontColor: isDarkMode ? "#DEDEDE" : "#000000"
+                                      },
+                                      {
+                                          type: "DropZone",
+                                          property: values.tabContentDynamic,
+                                          placeholder: "Dynamic Content"
+                                      } as DropZoneProps
+                                  ]
+                              }
+                          ]
+            }
+        ]
+    } as RowLayoutProps;
+
+    return {
+        type: "Container",
+        borders: true,
+        children: [titleHeader, tabList]
+    } as ContainerProps;
 }

@@ -15,6 +15,7 @@ const noContent: ReactElement = <span className="mx-text">No Content</span>;
 
 export function preview({
     tabListType,
+    currentTabStyle,
     tabBadgeStyle,
     tabList,
     tabCaptionTypeDynamic,
@@ -42,6 +43,7 @@ export function preview({
                                 tabCaptionText={tab.tabCaptionText}
                                 tabCaptionHTML={tab.tabCaptionHTML}
                                 tabCaptionContent={<span className="mx-text">{tab.tabCaptionContent.widgetCount}</span>}
+                                currentTabStyle={currentTabStyle}
                                 badgeStyle={tabBadgeStyle}
                                 badgeContent={tab.tabBadge}
                             />;
@@ -60,6 +62,7 @@ export function preview({
                             tabCaptionText={"New Tab"}
                             tabCaptionHTML={""}
                             tabCaptionContent={noContent}
+                            currentTabStyle={currentTabStyle}
                             badgeStyle={tabBadgeStyle}
                             badgeContent={""}
                         />
@@ -77,6 +80,7 @@ export function preview({
                             tabCaptionText={tabCaptionTextDynamic}
                             tabCaptionHTML={tabCaptionHTMLDynamic}
                             tabCaptionContent={noContent}
+                            currentTabStyle={currentTabStyle}
                             badgeStyle={tabBadgeStyle}
                             badgeContent={tabBadgeDynamic}
                         />

@@ -1,5 +1,5 @@
 import { ReactElement, createElement, ReactNode } from "react";
-import { TabBadgeStyleEnum, TabCaptionTypeEnum } from "../../typings/TabContainerPluggableProps";
+import { CurrentTabStyleEnum, TabBadgeStyleEnum, TabCaptionTypeEnum } from "../../typings/TabContainerPluggableProps";
 import Badge from "./Badge";
 
 type tabTagProps = {
@@ -8,6 +8,7 @@ type tabTagProps = {
     tabCaptionText: string;
     tabCaptionHTML: string;
     tabCaptionContent: ReactNode;
+    currentTabStyle: CurrentTabStyleEnum;
     badgeStyle: TabBadgeStyleEnum;
     badgeContent?: string;
     onTabClick: () => void;
@@ -20,6 +21,7 @@ function TabTag({
     tabCaptionText,
     tabCaptionHTML,
     onTabClick,
+    currentTabStyle,
     badgeStyle,
     badgeContent
 }: tabTagProps): ReactElement {
@@ -41,9 +43,16 @@ function TabTag({
     };
 
     return (
-        <div className={isCurrentTab ? "tcp-tab-tag tcp-tag-current" : "tcp-tab-tag"} onClick={() => onTabClick()}>
+        <div
+            className={
+                isCurrentTab
+                    ? `tcp-tab-tag tcp-tag-current btn btn-${currentTabStyle}`
+                    : `tcp-tab-tag btn btn-${currentTabStyle} btn-bordered`
+            }
+            onClick={() => onTabClick()}
+        >
             {renderCaption()}
-            <Badge badgeStyle={badgeStyle} badgeContent={badgeContent}/>
+            <Badge badgeStyle={badgeStyle} badgeContent={badgeContent} />
         </div>
     );
 }

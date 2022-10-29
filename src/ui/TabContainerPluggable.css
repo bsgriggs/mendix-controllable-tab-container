@@ -1,27 +1,70 @@
-.tcp .tcp-tab-tags{
+.tcp {
     display: flex;
-    align-items: flex-end;
+}
+.tcp .tcp-tab-tags {
+    display: flex;
     gap: 0.5em;
 }
-
-.tcp .tcp-tab-tags .tcp-tab-tag{
-    border: 1px solid #d7d7d7;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    padding: 10px 15px;
+.tcp .tcp-tab-tags .mx-text {
+    white-space: nowrap;
     width: fit-content;
-    margin-bottom: -1px;
-    cursor: pointer;
 }
-
-.tcp .tcp-tab-tags .tcp-tab-tag.tcp-tag-current{
-    border-bottom: 1px solid white;
+.tcp .tcp-tab-tags .tcp-tab-tag {
+    position: relative;
 }
-
-.tcp .tcp-tab{
+.tcp .tcp-tab-tags .tcp-tab-tag .tcp-badge {
+    padding: 2px;
+    border-radius: 4px;
+    position: absolute;
+    top: -10px;
+    right: -4px;
+}
+.tcp .tcp-tab {
     padding: 16px;
     border: 1px solid #d7d7d7;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-right-radius: 4px;
+    border-radius: 4px;
+    width: 100%;
+}
+.tcp.tcp-top {
+    flex-direction: column;
+}
+.tcp.tcp-top .tcp-tab-tags {
+    flex-direction: row;
+    align-items: flex-end;
+}
+.tcp.tcp-top .tcp-tab-tags .tcp-tab-tag {
+    margin-bottom: -1px;
+}
+.tcp.tcp-right {
+    flex-direction: row-reverse;
+}
+.tcp.tcp-right .tcp-tab-tags {
+    flex-direction: column;
+    align-items: flex-end;
+    align-items: flex-end;
+}
+.tcp.tcp-right .tcp-tab-tags .tcp-tab-tag {
+    margin-left: -1px;
+}
+.tcp.tcp-bottom {
+    flex-direction: column-reverse;
+}
+.tcp.tcp-bottom .tcp-tab-tags {
+    flex-direction: row;
+    align-items: flex-start;
+    align-items: flex-end;
+}
+.tcp.tcp-bottom .tcp-tab-tags .tcp-tab-tag {
+    margin-top: -1px;
+}
+.tcp.tcp-left {
+    flex-direction: row;
+}
+.tcp.tcp-left .tcp-tab-tags {
+    flex-direction: column;
+    align-items: flex-end;
+    align-items: flex-end;
+}
+.tcp.tcp-left .tcp-tab-tags .tcp-tab-tag {
+    margin-right: -1px;
 }
