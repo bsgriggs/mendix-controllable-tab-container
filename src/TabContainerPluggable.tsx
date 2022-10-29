@@ -1,7 +1,12 @@
 import { ReactElement, createElement, useState, ReactNode, useEffect } from "react";
 
-import { TabContainerPluggableContainerProps, TabListType } from "../typings/TabContainerPluggableProps";
-import { ValueStatus } from "mendix";
+import {
+    TabCaptionTypeDynamicEnum,
+    TabContainerPluggableContainerProps,
+    TabListType,
+    TabListTypeEnum
+} from "../typings/TabContainerPluggableProps";
+import { ValueStatus, ListValue, ListExpressionValue, ListWidgetValue, ListActionValue } from "mendix";
 import TabTags from "./components/TabTags";
 import TabContent from "./components/TabContent";
 
@@ -15,6 +20,68 @@ const sortTabList = (a: TabListType, b: TabListType): number => {
         const tabB = parseFloat(b.tabSort.value.toFixed(0));
         return tabA - tabB;
     } else return 0;
+};
+
+//filter out any that are not visible then sort
+const adjustTabList = (
+    tabListType: TabListTypeEnum,
+    tabList: TabListType[],
+    tabDatasource: ListValue,
+    tabCaptionTypeDynamic: TabCaptionTypeDynamicEnum,
+    tabCaptionTextDynamic: ListExpressionValue<string>,
+    tabCaptionHTMLDynamic: ListExpressionValue<string>,
+    tabContentDynamic: ListWidgetValue,
+    tabBadgeDynamic?: ListExpressionValue<string>,
+    onTabClickDynamic?: ListActionValue
+): TabListType[] | undefined => {
+    return tabListType === "static"
+        ? tabList.filter(tab => tab.tabVisible).sort(sortTabList)
+        : convertDatasourceTabs(
+              tabDatasource,
+              tabCaptionTypeDynamic,
+              tabCaptionTextDynamic,
+              tabCaptionHTMLDynamic,
+              tabContentDynamic,
+              tabBadgeDynamic,
+              onTabClickDynamic
+          );
+};
+
+// Map the Dynamic tabs by datasource to the static type
+const convertDatasourceTabs = (
+    tabDatasource: ListValue,
+    tabCaptionTypeDynamic: TabCaptionTypeDynamicEnum,
+    tabCaptionTextDynamic: ListExpressionValue<string>,
+    tabCaptionHTMLDynamic: ListExpressionValue<string>,
+    tabContentDynamic: ListWidgetValue,
+    tabBadgeDynamic?: ListExpressionValue<string>,
+    onTabClickDynamic?: ListActionValue
+): TabListType[] | undefined => {
+    if (
+        tabDatasource !== undefined &&
+        tabDatasource.status === ValueStatus.Available &&
+        tabDatasource.items !== undefined
+    ) {
+        return tabDatasource.items.map((objItem, index): TabListType => {
+            return {
+                tabCaptionType: tabCaptionTypeDynamic,
+                tabCaptionText:
+                    tabCaptionTextDynamic !== undefined
+                        ? tabCaptionTextDynamic.get(objItem)
+                        : { status: ValueStatus.Available, value: "" },
+                tabCaptionHTML:
+                    tabCaptionHTMLDynamic !== undefined
+                        ? tabCaptionHTMLDynamic.get(objItem)
+                        : { status: ValueStatus.Available, value: "" },
+                tabCaptionContent: undefined,
+                tabContent: tabContentDynamic.get(objItem),
+                tabSort: { status: ValueStatus.Available, value: new Big(index) },
+                tabVisible: { status: ValueStatus.Available, value: true },
+                tabBadge: tabBadgeDynamic?.get(objItem),
+                onTabClick: onTabClickDynamic?.get(objItem)
+            };
+        });
+    }
 };
 
 export function TabContainerPluggable({
@@ -34,58 +101,47 @@ export function TabContainerPluggable({
     name,
     style
 }: TabContainerPluggableContainerProps): ReactElement {
-    // Map the Dynamic tabs by datasource to the static type
-    const convertDatasourceTabs = (): TabListType[] | undefined => {
-        if (
-            tabDatasource !== undefined &&
-            tabDatasource.status === ValueStatus.Available &&
-            tabDatasource.items !== undefined
-        ) {
-            return tabDatasource.items.map((objItem, index): TabListType => {
-                return {
-                    tabCaptionType: tabCaptionTypeDynamic,
-                    tabCaptionText:
-                        tabCaptionTextDynamic !== undefined
-                            ? tabCaptionTextDynamic.get(objItem)
-                            : { status: ValueStatus.Available, value: "" },
-                    tabCaptionHTML:
-                        tabCaptionHTMLDynamic !== undefined
-                            ? tabCaptionHTMLDynamic.get(objItem)
-                            : { status: ValueStatus.Available, value: "" },
-                    tabCaptionContent: undefined,
-                    tabContent: tabContentDynamic.get(objItem),
-                    tabSort: { status: ValueStatus.Available, value: new Big(index) },
-                    tabVisible: { status: ValueStatus.Available, value: true },
-                    tabBadge: tabBadgeDynamic?.get(objItem),
-                    onTabClick: onTabClickDynamic?.get(objItem)
-                };
-            });
-        }
-    };
-
-    //filter out any that are not visible then sort
-    const adjustTabList = (): TabListType[] | undefined => {
-        return tabListType === "static"
-            ? tabList.filter(tab => tab.tabVisible).sort(sortTabList)
-            : convertDatasourceTabs();
-    };
-
     if (defaultTabIndex.status === ValueStatus.Available) {
         const [tabListAdjusted, setTabListAdjusted] = useState<TabListType[]>();
-        const [currentTabIndex, setCurrentTabIndex] = useState<number>(parseFloat(defaultTabIndex.value?.toFixed(0)));
+        const [currentTabIndex, setCurrentTabIndex] = useState<number>();
         const [currentTab, setCurrentTab] = useState<ReactNode>();
 
         useEffect(() => {
-            console.info("use Effect", { currentTabIndex, tabList, tabDatasource });
-            const newTabList = adjustTabList();
-            if (newTabList !== undefined) {
-                setTabListAdjusted(newTabList);
-                const newCurrentTab = newTabList[currentTabIndex];
+            if (defaultTabIndex.value !== undefined) {
+                console.info("use effect - default tab changed", defaultTabIndex);
+                setCurrentTabIndex(parseFloat(defaultTabIndex.value?.toFixed(0)));
+            }
+        }, [defaultTabIndex.value]);
+
+        useEffect(() => {
+            if (tabListAdjusted !== undefined && currentTabIndex !== undefined) {
+                console.info("use effect - current tab index changed", currentTabIndex);
+                const newCurrentTab = tabListAdjusted[currentTabIndex];
                 if (newCurrentTab !== undefined) {
+                    console.info("use effect - current tab index changed - tab found:", newCurrentTab);
                     setCurrentTab(newCurrentTab.tabContent);
+                } else {
+                    setCurrentTab(undefined);
                 }
             }
-        }, [currentTabIndex, tabList, tabDatasource]);
+        }, [currentTabIndex, tabListAdjusted]);
+
+        useEffect(() => {
+            console.info("use effect - tab list changed", { tabList, tabDatasource });
+            setTabListAdjusted(
+                adjustTabList(
+                    tabListType,
+                    tabList,
+                    tabDatasource,
+                    tabCaptionTypeDynamic,
+                    tabCaptionTextDynamic,
+                    tabCaptionHTMLDynamic,
+                    tabContentDynamic,
+                    tabBadgeDynamic,
+                    onTabClickDynamic
+                )
+            );
+        }, [tabList, tabDatasource?.items]);
 
         const handleTabClick = (tab: TabListType, index: number) => {
             if (index !== currentTabIndex) {
@@ -96,7 +152,13 @@ export function TabContainerPluggable({
             }
         };
 
-        if (tabListAdjusted !== undefined && tabListAdjusted.length > 0) {
+        if (
+            currentTabIndex !== undefined &&
+            tabListAdjusted !== undefined &&
+            tabListAdjusted.length > 0 &&
+            currentTab !== undefined
+        ) {
+            console.info("render for real", { currentTabIndex, tabListAdjusted, currentTab });
             return (
                 <div id={name} className={`tcp tcp-${tabDirection}`} style={style}>
                     <TabTags
