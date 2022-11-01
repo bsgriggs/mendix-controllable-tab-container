@@ -161,7 +161,7 @@
                 </enumerationValues>
             </property>
         </propertyGroup>
-        <propertyGroup caption="General">
+        <propertyGroup caption="Common">
             <systemProperty key="Name"></systemProperty>
             <systemProperty key="Visibility"></systemProperty>
         </propertyGroup>

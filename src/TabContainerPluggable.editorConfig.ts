@@ -1,6 +1,6 @@
 import { TabContainerPluggablePreviewProps } from "../typings/TabContainerPluggableProps";
 import { hideNestedPropertiesIn, hidePropertiesIn, hidePropertyIn } from "./utils/PageEditorUtils";
-import { StructurePreviewProps, RowLayoutProps, ContainerProps, TextProps, DropZoneProps } from "./utils/PageEditor";
+import { StructurePreviewProps, RowLayoutProps, ContainerProps, TextProps, DropZoneProps, ImageProps } from "./utils/PageEditor";
 
 export type Properties = PropertyGroup[];
 
@@ -118,12 +118,19 @@ export function getPreview(
     values: TabContainerPluggablePreviewProps,
     isDarkMode: boolean
 ): StructurePreviewProps | null {
+    const imageContainer:ImageProps = {
+        type: "Image",
+        width: 24,
+        height: 24,
+        data: "iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAICSURBVHgB7Zu9TsMwFIVPCgikClAHYGCp2BgYmOAB2HkLNgY2xAMgNoaOPETbHalsrGwwdWOApQFUCSGg5Ia2CsH5cXAcG99PulXVVLr2iROfHCnAN82gekENghqVUO1xjyTK7J/VOzxY1sSjNUgYiI7+Sb1DOiU3j1avwv6i3vDGB3XhB9WI/aarv6i3dgEmPaPo7B/vjVnRv0YjNWPyPA9FUNE/b+8aHIcFgOOwAHAcFgD6iTu0X9AW9tfK6D19PhAaoap9gCbIGW67LABx5boAvusCiJ8FVKFKSFWITojz22DmCrh/+MDxuY/b/htehtWd0b3dBZwcLGN9bQYqSb0H0OT3Dx8rnXiUpXoNndZKYRGkL4HTiydjJk88Dz+D1TiASlIFuLx+hWnc9d+hklQBFuvmbWO0ClSSKsDmxhxMg26GKkkV4OyoYdQqoLHQTqCSVAHobtttrSpXXRaa+M7WfDgWrdvgf4OdoABrnKAseZ2jVU5QlrhztN4JypLHOVrnBGXJco7WOUFZspyjdU5QliwPY5UTlCWPc7TCCcoi4xzZCcJxOBMEZ4LJcCbImSBngjANzgQ5E+RMsDDsBAVwJgjOBJPhTJAzQc4EYTucCXImyJngFHaCAqp4bc4oaAX4cBgS4Abu0qWPJvS8PG1a/Xihmr60LRi0qon3JpP/AhBYFWL5eqrZAAAAAElFTkSuQmCC"
+    }
     const titleHeader: RowLayoutProps = {
         type: "RowLayout",
         columnSize: "grow",
         backgroundColor: isDarkMode ? "#4F4F4F" : "#F5F5F5",
         borderWidth: 1,
         children: [
+            imageContainer,
             {
                 type: "Container",
                 padding: 8,
@@ -150,7 +157,7 @@ export function getPreview(
                               type: "Container",
                               borders: true,
                               borderRadius: 8,
-                              borderWidth: 2,
+                              borderWidth: 4, 
                               padding: 8,
                               children: [
                                   tab.tabCaptionType !== "custom"

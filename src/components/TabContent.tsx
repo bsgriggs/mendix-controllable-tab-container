@@ -1,15 +1,16 @@
 import { ReactElement, createElement, ReactNode } from "react";
+import NoTabContent from "./NoTabContent";
 
 type tabContentProps = {
-    tab: ReactNode;
+    currentTabIndex: number;
+    tab?: ReactNode;
 };
 
-function Tab({ tab }: tabContentProps): ReactElement {
-
-    return (
-        <div className={"tcp-tab"}>
-            {tab}
-        </div>
-    );
+function Tab({currentTabIndex, tab }: tabContentProps): ReactElement {
+    if (tab !== undefined) {
+        return <div className={"tcp-tab"}>{tab}</div>;
+    } else {
+        return <NoTabContent currentTabIndex={currentTabIndex}/>;
+    }
 }
 export default Tab;

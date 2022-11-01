@@ -87,10 +87,10 @@ export function preview({
                     </Fragment>
                 )}
             </div>
-            {tabListType === "static" && adjustTabList !== undefined && <TabContent tab={adjustTabList[0]} />}
+            {tabListType === "static" && adjustTabList !== undefined && <TabContent currentTabIndex={0} tab={adjustTabList[0]} />}
             {tabListType === "static" && adjustTabList === undefined && { noContent }}
             {tabListType === "dynamic" && (
-                <TabContent tab={<span className="mx-text">{tabContentDynamic.widgetCount}</span>} />
+                <TabContent currentTabIndex={0} tab={<span className="mx-text">{tabContentDynamic.widgetCount}</span>} />
             )}
         </div>
     );

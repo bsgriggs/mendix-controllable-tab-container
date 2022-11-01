@@ -1,5 +1,4 @@
-import { ReactElement, createElement, useState, ReactNode, useEffect } from "react";
-
+import { ReactElement, createElement, useState, useEffect } from "react";
 import {
     TabCaptionTypeDynamicEnum,
     TabContainerPluggableContainerProps,
@@ -9,7 +8,6 @@ import {
 import { ValueStatus, ListValue, ListExpressionValue, ListWidgetValue, ListActionValue } from "mendix";
 import TabTags from "./components/TabTags";
 import TabContent from "./components/TabContent";
-
 import "./ui/TabContainerPluggable.css";
 import Big from "big.js";
 import LoadingTabContainer from "./components/LoadingTabContainer";
@@ -101,80 +99,76 @@ export function TabContainerPluggable({
     name,
     style
 }: TabContainerPluggableContainerProps): ReactElement {
-    if (defaultTabIndex.status === ValueStatus.Available) {
-        const [tabListAdjusted, setTabListAdjusted] = useState<TabListType[]>();
-        const [currentTabIndex, setCurrentTabIndex] = useState<number>();
-        const [currentTab, setCurrentTab] = useState<ReactNode>();
+    const [tabListAdjusted, setTabListAdjusted] = useState<TabListType[]>();
+    const [currentTabIndex, setCurrentTabIndex] = useState<number>();
+    const [currentTab, setCurrentTab] = useState<TabListType>();
 
-        useEffect(() => {
-            if (defaultTabIndex.value !== undefined) {
-                console.info("use effect - default tab changed", defaultTabIndex);
-                setCurrentTabIndex(parseFloat(defaultTabIndex.value?.toFixed(0)));
-            }
-        }, [defaultTabIndex.value]);
-
-        useEffect(() => {
-            if (tabListAdjusted !== undefined && currentTabIndex !== undefined) {
-                console.info("use effect - current tab index changed", currentTabIndex);
-                const newCurrentTab = tabListAdjusted[currentTabIndex];
-                if (newCurrentTab !== undefined) {
-                    console.info("use effect - current tab index changed - tab found:", newCurrentTab);
-                    setCurrentTab(newCurrentTab.tabContent);
-                } else {
-                    setCurrentTab(undefined);
-                }
-            }
-        }, [currentTabIndex, tabListAdjusted]);
-
-        useEffect(() => {
-            console.info("use effect - tab list changed", { tabList, tabDatasource });
-            setTabListAdjusted(
-                adjustTabList(
-                    tabListType,
-                    tabList,
-                    tabDatasource,
-                    tabCaptionTypeDynamic,
-                    tabCaptionTextDynamic,
-                    tabCaptionHTMLDynamic,
-                    tabContentDynamic,
-                    tabBadgeDynamic,
-                    onTabClickDynamic
-                )
-            );
-        }, [tabList, tabDatasource?.items]);
-
-        const handleTabClick = (tab: TabListType, index: number) => {
-            if (index !== currentTabIndex) {
-                if (tab.onTabClick !== undefined && tab.onTabClick.canExecute && tab.onTabClick.isExecuting === false) {
-                    tab.onTabClick.execute;
-                }
-                setCurrentTabIndex(index);
-            }
-        };
-
-        if (
-            currentTabIndex !== undefined &&
-            tabListAdjusted !== undefined &&
-            tabListAdjusted.length > 0 &&
-            currentTab !== undefined
-        ) {
-            console.info("render for real", { currentTabIndex, tabListAdjusted, currentTab });
-            return (
-                <div id={name} className={`tcp tcp-${tabDirection}`} style={style}>
-                    <TabTags
-                        tabList={tabListAdjusted}
-                        currentTabIndex={currentTabIndex}
-                        currentTabStyle={currentTabStyle}
-                        badgeStyle={tabBadgeStyle}
-                        onTabClick={(tab, index) => handleTabClick(tab, index)}
-                    />
-                    <TabContent tab={currentTab} />
-                </div>
-            );
-        } else {
-            return <LoadingTabContainer name={name} style={style} />;
+    useEffect(() => {
+        if (defaultTabIndex.value !== undefined) {
+            console.info("use effect - default tab changed", defaultTabIndex);
+            setCurrentTabIndex(parseFloat(defaultTabIndex.value?.toFixed(0)));
         }
+    }, [defaultTabIndex.value]);
+
+    useEffect(() => {
+        if (tabListAdjusted !== undefined && currentTabIndex !== undefined) {
+            console.info("use effect - current tab index changed", currentTabIndex);
+            const newCurrentTab = tabListAdjusted[currentTabIndex];
+            if (newCurrentTab !== undefined) {
+                console.info("use effect - current tab index changed - tab found:", newCurrentTab);
+                setCurrentTab(newCurrentTab);
+            } else {
+                setCurrentTab(undefined);
+            }
+        }
+    }, [currentTabIndex, tabListAdjusted]);
+
+    useEffect(() => {
+        console.info("use effect - tab list changed", { tabList, tabDatasource });
+        setTabListAdjusted(
+            adjustTabList(
+                tabListType,
+                tabList,
+                tabDatasource,
+                tabCaptionTypeDynamic,
+                tabCaptionTextDynamic,
+                tabCaptionHTMLDynamic,
+                tabContentDynamic,
+                tabBadgeDynamic,
+                onTabClickDynamic
+            )
+        );
+    }, [tabList, tabDatasource?.items]);
+
+    const handleTabClick = (tab: TabListType, index: number) => {
+        if (index !== currentTabIndex) {
+            if (tab.onTabClick !== undefined && tab.onTabClick.canExecute && tab.onTabClick.isExecuting === false) {
+                tab.onTabClick.execute;
+            }
+            setCurrentTabIndex(index);
+        }
+    };
+
+    if (currentTabIndex !== undefined && tabListAdjusted !== undefined && tabListAdjusted.length > 0 && currentTab !== undefined) {
+        console.info("render for real", { currentTabIndex, tabListAdjusted, currentTab });
+        return (
+            <div id={name} className={`tcp tcp-${tabDirection}`} style={style}>
+                <TabTags
+                    tabList={tabListAdjusted}
+                    currentTabIndex={currentTabIndex}
+                    currentTabStyle={currentTabStyle}
+                    badgeStyle={tabBadgeStyle}
+                    onTabClick={(tab, index) => handleTabClick(tab, index)}
+                />
+                <TabContent currentTabIndex={currentTabIndex} tab={currentTab?.tabContent} />
+            </div>
+        );
     } else {
-        return <LoadingTabContainer name={name} style={style} />;
+        return (
+            <LoadingTabContainer
+                name={name}
+                style={style}
+            />
+        );
     }
 }
