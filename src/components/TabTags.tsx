@@ -1,7 +1,7 @@
 import { ReactElement, createElement } from "react";
 import { 
     // CurrentTabStyleEnum, 
-    TabBadgeStyleEnum, TabListType } from "typings/TabContainerPluggableProps";
+    TabBadgeStyleEnum, TabListType } from "typings/ControllableTabContainerProps";
 import TabTag from "./TabTag";
 
 type tabTagsProps = {
@@ -16,7 +16,7 @@ function TabTags({ tabList, currentTabIndex, onTabClick,
     //  currentTabStyle, 
      badgeStyle }: tabTagsProps): ReactElement {
     return (
-        <div className={"tcp-tab-tags"}>
+        <div className={"ctc-tab-tags"}>
             {tabList.map((tab, index) => (
                 <TabTag
                     key={index}

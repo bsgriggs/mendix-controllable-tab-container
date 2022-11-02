@@ -1,5 +1,5 @@
 /**
- * This file was generated from TabContainerPluggable.xml
+ * This file was generated from ControllableTabContainer.xml
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix UI Content Team
  */
@@ -41,7 +41,7 @@ export interface TabListPreviewType {
     onTabClick: {} | null;
 }
 
-export interface TabContainerPluggableContainerProps {
+export interface ControllableTabContainerContainerProps {
     name: string;
     class: string;
     style?: CSSProperties;
@@ -60,7 +60,7 @@ export interface TabContainerPluggableContainerProps {
     tabDirection: TabDirectionEnum;
 }
 
-export interface TabContainerPluggablePreviewProps {
+export interface ControllableTabContainerPreviewProps {
     className: string;
     style: string;
     styleObject?: CSSProperties;

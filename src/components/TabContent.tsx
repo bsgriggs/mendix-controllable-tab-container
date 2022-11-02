@@ -8,7 +8,7 @@ type tabContentProps = {
 
 function Tab({currentTabIndex, tab }: tabContentProps): ReactElement {
     if (tab !== undefined) {
-        return <div className={"tcp-tab"}>{tab}</div>;
+        return <div className={"ctc-tab"}>{tab}</div>;
     } else {
         return <NoTabContent currentTabIndex={currentTabIndex}/>;
     }

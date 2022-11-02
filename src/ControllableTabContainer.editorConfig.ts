@@ -1,4 +1,4 @@
-import { TabContainerPluggablePreviewProps } from "../typings/TabContainerPluggableProps";
+import { ControllableTabContainerPreviewProps } from "../typings/ControllableTabContainerProps";
 import { hideNestedPropertiesIn, hidePropertiesIn, hidePropertyIn } from "./utils/PageEditorUtils";
 import { StructurePreviewProps, RowLayoutProps, ContainerProps, TextProps, DropZoneProps, ImageProps } from "./utils/PageEditor";
 
@@ -33,7 +33,7 @@ type ObjectProperties = {
     captions?: string[]; // used for customizing object grids
 };
 
-export function getProperties(_values: TabContainerPluggablePreviewProps, defaultProperties: Properties): Properties {
+export function getProperties(_values: ControllableTabContainerPreviewProps, defaultProperties: Properties): Properties {
     switch (_values.tabListType) {
         case "static":
             hidePropertiesIn(defaultProperties, _values, [
@@ -99,7 +99,7 @@ export function getProperties(_values: TabContainerPluggablePreviewProps, defaul
     return defaultProperties;
 }
 
-export function check(_values: TabContainerPluggablePreviewProps): Problem[] {
+export function check(_values: ControllableTabContainerPreviewProps): Problem[] {
     const errors: Problem[] = [];
     // Add errors to the above array to throw errors in Studio and Studio Pro.
     /* Example
@@ -115,7 +115,7 @@ export function check(_values: TabContainerPluggablePreviewProps): Problem[] {
 }
 
 export function getPreview(
-    values: TabContainerPluggablePreviewProps,
+    values: ControllableTabContainerPreviewProps,
     isDarkMode: boolean
 ): StructurePreviewProps | null {
     const imageContainer:ImageProps = {
@@ -142,7 +142,7 @@ export function getPreview(
                 children: [
                     {
                         type: "Text",
-                        content: "Tab Container Pluggable",
+                        content: "Controllable Tab Container",
                         fontColor: isDarkMode ? "#6DB1FE" : "#2074C8"
                     } as TextProps
                 ]

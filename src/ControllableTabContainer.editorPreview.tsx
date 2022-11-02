@@ -1,5 +1,5 @@
 import { ReactElement, createElement, Fragment } from "react";
-import { TabContainerPluggablePreviewProps, TabListPreviewType } from "../typings/TabContainerPluggableProps";
+import { ControllableTabContainerPreviewProps, TabListPreviewType } from "../typings/ControllableTabContainerProps";
 import TabContent from "./components/TabContent";
 import Tab from "./components/TabTag";
 
@@ -23,13 +23,13 @@ export function preview({
     tabCaptionHTMLDynamic,
     tabContentDynamic,
     tabBadgeDynamic
-}: TabContainerPluggablePreviewProps): ReactElement {
+}: ControllableTabContainerPreviewProps): ReactElement {
     //filter out any that are not visible then sort
     const adjustTabList = tabList.filter(tab => tab.tabVisible).sort(sortTabList);
 
     return (
-        <div className={"tcp"}>
-            <div className={"tcp-tabs"}>
+        <div className={"ctc"}>
+            <div className={"ctc-tabs"}>
                 {tabListType === "static" && adjustTabList !== undefined && (
                     <Fragment>
                         <span> Static w/ content</span>
@@ -97,5 +97,5 @@ export function preview({
 }
 
 export function getPreviewCss(): string {
-    return require("./ui/TabContainerPluggable.css");
+    return require("./ui/ControllableTabContainer.css");
 }

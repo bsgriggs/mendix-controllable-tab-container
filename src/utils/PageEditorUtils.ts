@@ -2,7 +2,7 @@
 /**
  * TODO: Include tests for methods
  */
-import { Properties, Property, PropertyGroup } from "../TabContainerPluggable.editorConfig";
+import { Properties, Property, PropertyGroup } from "../ControllableTabContainer.editorConfig";
 
 declare type Option<T> = T | undefined;
 

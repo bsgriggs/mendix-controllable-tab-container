@@ -1,14 +1,14 @@
 import { ReactElement, createElement, useState, useEffect, Fragment } from "react";
 import {
     TabCaptionTypeDynamicEnum,
-    TabContainerPluggableContainerProps,
+    ControllableTabContainerContainerProps,
     TabListType
     // TabListTypeEnum
-} from "../typings/TabContainerPluggableProps";
+} from "../typings/ControllableTabContainerProps";
 import { ValueStatus, ListValue, ListExpressionValue, ListWidgetValue, ListActionValue } from "mendix";
 import TabTags from "./components/TabTags";
 import TabContent from "./components/TabContent";
-import "./ui/TabContainerPluggable.css";
+import "./ui/ControllableTabContainer.css";
 import Big from "big.js";
 
 const sortTabList = (a: TabListType, b: TabListType): number => {
@@ -56,7 +56,7 @@ const convertDatasourceTabs = (
     }
 };
 
-export function TabContainerPluggable({
+export function ControllableTabContainer({
     defaultTabIndex,
     tabListType,
     // currentTabStyle,
@@ -72,7 +72,7 @@ export function TabContainerPluggable({
     tabDirection,
     name,
     style
-}: TabContainerPluggableContainerProps): ReactElement {
+}: ControllableTabContainerContainerProps): ReactElement {
     const [tabListAdjusted, setTabListAdjusted] = useState<TabListType[]>();
     const [currentTabIndex, setCurrentTabIndex] = useState<number>();
     const [currentTab, setCurrentTab] = useState<TabListType>();
@@ -143,7 +143,7 @@ export function TabContainerPluggable({
     ) {
         // console.info("render for real", { currentTabIndex, tabListAdjusted, currentTab });
         return (
-            <div id={name} className={`tcp tcp-${tabDirection}`} style={style}>
+            <div id={name} className={`ctc ctc-${tabDirection}`} style={style}>
                 <TabTags
                     tabList={tabListAdjusted}
                     currentTabIndex={currentTabIndex}

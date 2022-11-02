@@ -1,5 +1,5 @@
 import { ReactElement, createElement, Fragment } from "react";
-import { TabBadgeStyleEnum } from "../../typings/TabContainerPluggableProps";
+import { TabBadgeStyleEnum } from "../../typings/ControllableTabContainerProps";
 
 type BadgeProps = {
     badgeStyle: TabBadgeStyleEnum;
@@ -8,7 +8,7 @@ type BadgeProps = {
 
 function Badge({ badgeStyle, badgeContent }: BadgeProps): ReactElement {
     if (badgeContent !== undefined && badgeContent?.trim() !== "") {
-        return <div className={`tcp-badge btn mx-button btn-${badgeStyle}`}>{badgeContent}</div>;
+        return <div className={`ctc-badge btn mx-button btn-${badgeStyle}`}>{badgeContent}</div>;
     } else return <Fragment></Fragment>
 }
 export default Badge;

@@ -1,7 +1,7 @@
 import { ReactElement, createElement, ReactNode } from "react";
 import {
     //  CurrentTabStyleEnum, 
-    TabBadgeStyleEnum, TabCaptionTypeEnum } from "../../typings/TabContainerPluggableProps";
+    TabBadgeStyleEnum, TabCaptionTypeEnum } from "../../typings/ControllableTabContainerProps";
 import Badge from "./Badge";
 
 type tabTagProps = {
@@ -48,8 +48,8 @@ function TabTag({
         <div
             className={
                 isCurrentTab
-                    ? "tcp-tab-tag tcp-tab-tag-active"
-                    : "tcp-tab-tag"
+                    ? "ctc-tab-tag ctc-tab-tag-active"
+                    : "ctc-tab-tag"
             }
             onClick={() => onTabClick()}
         >

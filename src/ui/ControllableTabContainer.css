@@ -1,23 +1,24 @@
 
-.tcp {
+.ctc {
     display: flex;
 }
-.tcp .tcp-tab-tags {
+.ctc .ctc-tab-tags {
     display: flex;
     /* flex-wrap: wrap; */
 }
-.tcp .tcp-tab-tags .tcp-tab-tag {
+.ctc .ctc-tab-tags .ctc-tab-tag {
     display: flex;
+    align-items: center;
     padding: 10px 15px;
     cursor: pointer;
     color: #6c717e;
 }
-.tcp .tcp-tab-tags .tcp-tab-tag.tcp-tab-tag-active{
+.ctc .ctc-tab-tags .ctc-tab-tag.ctc-tab-tag-active{
     border: 1px solid #ced0d3;
     background-color: transparent;
 }
 
-.tcp .tcp-tab-tags .tcp-tab-tag .tcp-badge {
+.ctc .ctc-tab-tags .ctc-tab-tag .ctc-badge {
     margin-left: 8px;
     border-radius: 12px;
     font-size: 12px;
@@ -25,62 +26,63 @@
     padding: 4px 8px;
     cursor: default;
     border: none;
+    height: fit-content;
 }
-.tcp .tcp-tab {
+.ctc .ctc-tab {
     width: 100%;
 }
-.tcp.tcp-top {
+.ctc.ctc-top {
     flex-direction: column;
 }
-.tcp.tcp-top > .tcp-tab-tags {
+.ctc.ctc-top > .ctc-tab-tags {
     flex-direction: row;
     align-items: flex-end;
     margin-bottom: 16px;
     border-bottom: 1px solid #ddd;
 }
-.tcp.tcp-top > .tcp-tab-tags .tcp-tab-tag {
+.ctc.ctc-top > .ctc-tab-tags .ctc-tab-tag {
     margin-bottom: -1px;
     border-bottom-color: #fff;
     border-radius: 4px 4px 0 0;
 }
-.tcp.tcp-right {
+.ctc.ctc-right {
     flex-direction: row-reverse;
 }
-.tcp.tcp-right > .tcp-tab-tags {
+.ctc.ctc-right > .ctc-tab-tags {
     flex-direction: column;
     align-items: flex-start;
     margin-left: 16px;
     border-left: 1px solid #ddd;
 }
-.tcp.tcp-right > .tcp-tab-tags .tcp-tab-tag {
+.ctc.ctc-right > .ctc-tab-tags .ctc-tab-tag {
     margin-left: -1px;
     border-left-color: #fff;
     border-radius: 0 4px 4px 0;
 }
-.tcp.tcp-bottom {
+.ctc.ctc-bottom {
     flex-direction: column-reverse;
 }
-.tcp.tcp-bottom > .tcp-tab-tags {
+.ctc.ctc-bottom > .ctc-tab-tags {
     flex-direction: row;
     align-items: flex-start;
     margin-top: 16px;
     border-top: 1px solid #ddd;
 }
-.tcp.tcp-bottom > .tcp-tab-tags .tcp-tab-tag {
+.ctc.ctc-bottom > .ctc-tab-tags .ctc-tab-tag {
     margin-top: -1px;
     border-top-color: #fff;
     border-radius: 0 0 4px 4px;
 }
-.tcp.tcp-left {
+.ctc.ctc-left {
     flex-direction: row;
 }
-.tcp.tcp-left > .tcp-tab-tags {
+.ctc.ctc-left > .ctc-tab-tags {
     flex-direction: column;
     align-items: flex-end;
     margin-right: 16px;
     border-right: 1px solid #ddd;
 }
-.tcp.tcp-left > .tcp-tab-tags .tcp-tab-tag {
+.ctc.ctc-left > .ctc-tab-tags .ctc-tab-tag {
     margin-right: -1px;
     /* border-right-color: #fff; */
     border-radius: 4px 0 0 4px;

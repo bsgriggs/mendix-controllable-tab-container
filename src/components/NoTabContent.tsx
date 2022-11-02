@@ -6,7 +6,7 @@ type NoTabContentProps = {
 
 function NoTabContent({currentTabIndex}: NoTabContentProps): ReactElement {
     return (
-        <div className="tcp-tab" >
+        <div className="ctc-tab" >
             <span className="mx-text text-danger">{"No content found for tab at index " + currentTabIndex}</span>
         </div>
     );
