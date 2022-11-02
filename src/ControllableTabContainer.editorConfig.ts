@@ -1,6 +1,13 @@
 import { ControllableTabContainerPreviewProps } from "../typings/ControllableTabContainerProps";
 import { hideNestedPropertiesIn, hidePropertiesIn, hidePropertyIn } from "./utils/PageEditorUtils";
-import { StructurePreviewProps, RowLayoutProps, ContainerProps, TextProps, DropZoneProps, ImageProps } from "./utils/PageEditor";
+import {
+    StructurePreviewProps,
+    RowLayoutProps,
+    ContainerProps,
+    TextProps,
+    DropZoneProps,
+    ImageProps
+} from "./utils/PageEditor";
 
 export type Properties = PropertyGroup[];
 
@@ -33,37 +40,40 @@ type ObjectProperties = {
     captions?: string[]; // used for customizing object grids
 };
 
-export function getProperties(_values: ControllableTabContainerPreviewProps, defaultProperties: Properties): Properties {
+export function getProperties(
+    _values: ControllableTabContainerPreviewProps,
+    defaultProperties: Properties
+): Properties {
     switch (_values.tabListType) {
         case "static":
             hidePropertiesIn(defaultProperties, _values, [
-                "tabDatasource",
-                "tabCaptionTypeDynamic",
-                "tabCaptionTextDynamic",
-                "tabCaptionHTMLDynamic",
+                "datasource",
+                "captionTypeDynamic",
+                "captionTextDynamic",
+                "captionHTMLDynamic",
                 "onTabClickDynamic",
-                "tabContentDynamic",
-                "tabBadgeDynamic"
+                "contentDynamic",
+                "badgeTextDynamic"
             ]);
-            _values.tabList.map((tab, index) => {
+            _values.tabList.map((tab, index): void => {
                 // remove based on Tab Type
-                switch (tab.tabCaptionType) {
+                switch (tab.captionType) {
                     case "text":
                         hideNestedPropertiesIn(defaultProperties, _values, "tabList", index, [
-                            "tabCaptionHTML",
-                            "tabCaptionContent"
+                            "captionHTML",
+                            "captionContent"
                         ]);
                         break;
                     case "html":
                         hideNestedPropertiesIn(defaultProperties, _values, "tabList", index, [
-                            "tabCaptionText",
-                            "tabCaptionContent"
+                            "captionText",
+                            "captionContent"
                         ]);
                         break;
                     case "custom":
                         hideNestedPropertiesIn(defaultProperties, _values, "tabList", index, [
-                            "tabCaptionHTML",
-                            "tabCaptionText"
+                            "captionHTML",
+                            "captionText"
                         ]);
                         break;
                 }
@@ -73,25 +83,25 @@ export function getProperties(_values: ControllableTabContainerPreviewProps, def
             // remove all tab list settings
             for (let index = 0; index < _values.tabList.length; index++) {
                 hideNestedPropertiesIn(defaultProperties, _values, "tabList", index, [
-                    "tabCaptionHTML",
-                    "tabCaptionContent",
+                    "captionHTML",
+                    "captionContent",
                     "onTabClick",
-                    "tabCaptionText",
-                    "tabCaptionType",
-                    "tabContent",
-                    "tabSort",
-                    "tabVisible",
-                    "tabBadge"
+                    "captionText",
+                    "captionType",
+                    "content",
+                    "sort",
+                    "visible",
+                    "badgeText"
                 ]);
             }
             hidePropertyIn(defaultProperties, _values, "tabList");
             // remove based on Tab Type
-            switch (_values.tabCaptionTypeDynamic) {
+            switch (_values.captionTypeDynamic) {
                 case "text":
-                    hidePropertyIn(defaultProperties, _values, "tabCaptionHTMLDynamic");
+                    hidePropertyIn(defaultProperties, _values, "captionHTMLDynamic");
                     break;
                 case "html":
-                    hidePropertyIn(defaultProperties, _values, "tabCaptionTextDynamic");
+                    hidePropertyIn(defaultProperties, _values, "captionTextDynamic");
                     break;
             }
     }
@@ -118,12 +128,12 @@ export function getPreview(
     values: ControllableTabContainerPreviewProps,
     isDarkMode: boolean
 ): StructurePreviewProps | null {
-    const imageContainer:ImageProps = {
+    const imageContainer: ImageProps = {
         type: "Image",
         width: 20,
         height: 20,
         data: "iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAICSURBVHgB7Zu9TsMwFIVPCgikClAHYGCp2BgYmOAB2HkLNgY2xAMgNoaOPETbHalsrGwwdWOApQFUCSGg5Ia2CsH5cXAcG99PulXVVLr2iROfHCnAN82gekENghqVUO1xjyTK7J/VOzxY1sSjNUgYiI7+Sb1DOiU3j1avwv6i3vDGB3XhB9WI/aarv6i3dgEmPaPo7B/vjVnRv0YjNWPyPA9FUNE/b+8aHIcFgOOwAHAcFgD6iTu0X9AW9tfK6D19PhAaoap9gCbIGW67LABx5boAvusCiJ8FVKFKSFWITojz22DmCrh/+MDxuY/b/htehtWd0b3dBZwcLGN9bQYqSb0H0OT3Dx8rnXiUpXoNndZKYRGkL4HTiydjJk88Dz+D1TiASlIFuLx+hWnc9d+hklQBFuvmbWO0ClSSKsDmxhxMg26GKkkV4OyoYdQqoLHQTqCSVAHobtttrSpXXRaa+M7WfDgWrdvgf4OdoABrnKAseZ2jVU5QlrhztN4JypLHOVrnBGXJco7WOUFZspyjdU5QliwPY5UTlCWPc7TCCcoi4xzZCcJxOBMEZ4LJcCbImSBngjANzgQ5E+RMsDDsBAVwJgjOBJPhTJAzQc4EYTucCXImyJngFHaCAqp4bc4oaAX4cBgS4Abu0qWPJvS8PG1a/Xihmr60LRi0qon3JpP/AhBYFWL5eqrZAAAAAElFTkSuQmCC"
-    }
+    };
     const titleHeader: RowLayoutProps = {
         type: "RowLayout",
         backgroundColor: isDarkMode ? "#3B5C8F" : "#DAEFFB",
@@ -162,17 +172,17 @@ export function getPreview(
                               type: "Container",
                               borders: true,
                               borderRadius: 8,
-                              borderWidth: 4, 
+                              borderWidth: 4,
                               padding: 8,
                               children: [
-                                  tab.tabCaptionType !== "custom"
+                                  tab.captionType !== "custom"
                                       ? {
                                             type: "Text",
                                             content:
                                                 "TAB: " +
-                                                (tab.tabCaptionType === "text"
-                                                    ? tab.tabCaptionText
-                                                    : tab.tabCaptionHTML),
+                                                (tab.captionType === "text"
+                                                    ? tab.captionText
+                                                    : tab.captionHTML),
                                             fontSize: 10,
                                             bold: true,
                                             fontColor: isDarkMode ? "#DEDEDE" : "#6B707B"
@@ -189,7 +199,7 @@ export function getPreview(
                                                 },
                                                 {
                                                     type: "DropZone",
-                                                    property: tab.tabCaptionContent,
+                                                    property: tab.captionContent,
                                                     placeholder: `Tab ${index} Caption`,
                                                     grow: 1
                                                 } as DropZoneProps
@@ -197,9 +207,9 @@ export function getPreview(
                                         },
                                   {
                                       type: "DropZone",
-                                      property: tab.tabContent,
+                                      property: tab.content,
                                       placeholder:
-                                          (tab.tabCaptionType === "text" ? tab.tabCaptionText : tab.tabCaptionHTML) +
+                                          (tab.captionType === "text" ? tab.captionText : tab.captionHTML) +
                                           " Content"
                                   } as DropZoneProps
                               ]
@@ -218,17 +228,17 @@ export function getPreview(
                                   type: "Text",
                                   content:
                                       "Dynamic TAB: " +
-                                      //   (values.tabDatasource !== null && values.tabDatasource.type !== undefined ? values.tabDatasource.type : "") +
-                                      (values.tabCaptionTypeDynamic === "text"
-                                          ? values.tabCaptionTextDynamic
-                                          : values.tabCaptionHTMLDynamic),
+                                      //   (values.datasource !== null && values.datasource.type !== undefined ? values.datasource.type : "") +
+                                      (values.captionTypeDynamic === "text"
+                                          ? values.captionTextDynamic
+                                          : values.captionHTMLDynamic),
                                   fontSize: 10,
                                   bold: true,
                                   fontColor: isDarkMode ? "#DEDEDE" : "#6B707B"
                               },
                               {
                                   type: "DropZone",
-                                  property: values.tabContentDynamic,
+                                  property: values.contentDynamic,
                                   placeholder: "Dynamic Content"
                               } as DropZoneProps
                           ]

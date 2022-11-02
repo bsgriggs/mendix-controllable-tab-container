@@ -26,7 +26,7 @@
                 <description/>
                 <properties>
                     <propertyGroup caption="Object list group">
-                        <property key="tabCaptionType" type="enumeration" defaultValue="text">
+                        <property key="captionType" type="enumeration" defaultValue="text">
                             <caption>Caption Type</caption>
                             <description></description>
                             <enumerationValues>
@@ -35,40 +35,40 @@
                                 <enumerationValue key="custom">Custom</enumerationValue>
                             </enumerationValues>
                         </property>
-                        <property key="tabCaptionText" type="textTemplate">
+                        <property key="captionText" type="textTemplate">
                             <caption>Caption Text</caption>
                             <description>Content displayed as this tab's name </description>
                             <translations>
                                 <translation lang="en_US">New Tab</translation>
                             </translations>
                         </property>
-                        <property key="tabCaptionHTML" type="textTemplate">
+                        <property key="captionHTML" type="textTemplate">
                             <caption>Caption HTML</caption>
                             <description>Content displayed as this tab's name </description>
                             <translations>
                                 <translation lang="en_US">New Tab</translation>
                             </translations>
                         </property>
-                        <property key="tabCaptionContent" type="widgets">
+                        <property key="captionContent" type="widgets">
                             <caption>Caption Content</caption>
                             <description></description>
                         </property>
-                        <property key="tabVisible" type="expression" defaultValue="true">
+                        <property key="visible" type="expression" defaultValue="true">
                             <caption>Tab Visible</caption>
                             <description>Whether or not this tab is visable</description>
                             <returnType type="Boolean" />
                         </property>
-                        <property key="tabSort" type="expression" defaultValue="1" required="true">
+                        <property key="sort" type="expression" defaultValue="1" required="true">
                             <caption>Tab Sort</caption>
                             <description>The order this tab appears to others (Ascending)</description>
                             <returnType type="Integer" />
                         </property>
-                        <property key="tabContent" type="widgets">
+                        <property key="content" type="widgets">
                             <caption>Content</caption>
                             <description></description>
                         </property>
-                        <property key="tabBadge" type="textTemplate" required="false">
-                            <caption>Tab Badge</caption>
+                        <property key="badgeText" type="textTemplate" required="false">
+                            <caption>Tab Badge Text</caption>
                             <description>A small badge on the top right of the tab</description>
                             <translations>
                                 <translation lang="en_US"></translation>
@@ -81,11 +81,11 @@
                     </propertyGroup>
                 </properties>
             </property>
-            <property key="tabDatasource" type="datasource" isList="true">
+            <property key="datasource" type="datasource" isList="true">
                 <caption>Tab Datasource</caption>
                 <description></description>
             </property>
-            <property key="tabCaptionTypeDynamic" type="enumeration" defaultValue="text">
+            <property key="captionTypeDynamic" type="enumeration" defaultValue="text">
                 <caption>Caption Type</caption>
                 <description></description>
                 <enumerationValues>
@@ -93,51 +93,38 @@
                     <enumerationValue key="html">HTML</enumerationValue>
                 </enumerationValues>
             </property>
-            <property key="tabCaptionTextDynamic" type="textTemplate" dataSource="tabDatasource">
+            <property key="captionTextDynamic" type="textTemplate" dataSource="datasource">
                 <caption>Caption Text</caption>
                 <description>Content displayed as this tab's name </description>
                 <translations>
                     <translation lang="en_US">New Tab</translation>
                 </translations>
             </property>
-            <property key="tabCaptionHTMLDynamic" type="textTemplate" dataSource="tabDatasource">
+            <property key="captionHTMLDynamic" type="textTemplate" dataSource="datasource">
                 <caption>Caption HTML</caption>
                 <description>Content displayed as this tab's name </description>
                 <translations>
                     <translation lang="en_US">New Tab</translation>
                 </translations>
             </property>
-            <property key="tabContentDynamic" type="widgets" dataSource="tabDatasource">
+            <property key="contentDynamic" type="widgets" dataSource="datasource">
                 <caption>Content</caption>
                 <description></description>
             </property>
-            <property key="tabBadgeDynamic" type="textTemplate" required="false" dataSource="tabDatasource">
-                <caption>Tab Badge</caption>
+            <property key="badgeTextDynamic" type="textTemplate" required="false" dataSource="datasource">
+                <caption>Badge Text</caption>
                 <description>A small badge on the top right of the tab</description>
                 <translations>
                     <translation lang="en_US"></translation>
                 </translations>
             </property>
-            <property key="onTabClickDynamic" type="action" required="false" dataSource="tabDatasource">
+            <property key="onTabClickDynamic" type="action" required="false" dataSource="datasource">
                 <caption>On Click</caption>
                 <description>Action when the user clicks on this tab</description>
             </property>
         </propertyGroup>
         <propertyGroup caption="Style">
-            <!-- <property key="currentTabStyle" type="enumeration" defaultValue="default">
-                <caption>Current Tab Style</caption>
-                <description></description>
-                <enumerationValues>
-                    <enumerationValue key="default">Default</enumerationValue>
-                    <enumerationValue key="inverse">Inverse</enumerationValue>
-                    <enumerationValue key="primary">Primary</enumerationValue>
-                    <enumerationValue key="info">Info</enumerationValue>
-                    <enumerationValue key="success">Success</enumerationValue>
-                    <enumerationValue key="warning">Warning</enumerationValue>
-                    <enumerationValue key="danger">Danger</enumerationValue>
-                </enumerationValues>
-            </property> -->
-            <property key="tabBadgeStyle" type="enumeration" defaultValue="primary">
+            <property key="badgeStyle" type="enumeration" defaultValue="primary">
                 <caption>Badge Style</caption>
                 <description></description>
                 <enumerationValues>
@@ -150,7 +137,17 @@
                     <enumerationValue key="danger">Danger</enumerationValue>
                 </enumerationValues>
             </property>
-            <property key="tabDirection" type="enumeration" defaultValue="top">
+            <property key="badgeDirection" type="enumeration" defaultValue="right">
+                <caption>Badge Direction</caption>
+                <description>Where the badge appear relative to the caption</description>
+                <enumerationValues>
+                    <enumerationValue key="top">Top</enumerationValue>
+                    <enumerationValue key="right">Right</enumerationValue>
+                    <enumerationValue key="bottom">Bottom</enumerationValue>
+                    <enumerationValue key="left">Left</enumerationValue>
+                </enumerationValues>
+            </property>
+            <property key="direction" type="enumeration" defaultValue="top">
                 <caption>Tab Direction</caption>
                 <description>Where the tabs appear relative to the content</description>
                 <enumerationValues>

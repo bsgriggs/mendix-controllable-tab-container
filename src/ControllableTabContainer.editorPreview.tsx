@@ -1,97 +1,129 @@
-import { ReactElement, createElement, Fragment } from "react";
+import { ReactElement, createElement } from "react";
 import { ControllableTabContainerPreviewProps, TabListPreviewType } from "../typings/ControllableTabContainerProps";
 import TabContent from "./components/TabContent";
-import Tab from "./components/TabTag";
-
-const sortTabList = (a: TabListPreviewType, b: TabListPreviewType): number => {
-    if (a.tabSort !== undefined && b.tabSort !== undefined) {
-        const tabA = parseFloat(a.tabSort);
-        const tabB = parseFloat(b.tabSort);
-        return tabA - tabB;
-    } else return 0;
-};
-
-const noContent: ReactElement = <span className="mx-text">No Content</span>;
+import TabTags from "./components/TabTags";
+import {Tab} from "../typings/General";
 
 export function preview({
     tabListType,
-    // currentTabStyle,
-    tabBadgeStyle,
+    badgeStyle,
     tabList,
-    tabCaptionTypeDynamic,
-    tabCaptionTextDynamic,
-    tabCaptionHTMLDynamic,
-    tabContentDynamic,
-    tabBadgeDynamic
+    direction,
+    datasource,
+    captionTypeDynamic,
+    captionTextDynamic,
+    captionHTMLDynamic,
+    contentDynamic,
+    badgeTextDynamic,
+    badgeDirection
 }: ControllableTabContainerPreviewProps): ReactElement {
     //filter out any that are not visible then sort
-    const adjustTabList = tabList.filter(tab => tab.tabVisible).sort(sortTabList);
+    const tabListPreview: TabListPreviewType[] =
+        tabListType === "static"
+            ? tabList.length > 0
+                ? tabList
+                : [
+                      {
+                          captionType: "text",
+                          captionText: "[No tabs configured]",
+                          captionHTML: "",
+                          captionContent: {
+                              widgetCount: 1,
+                              // eslint-disable-next-line no-empty-pattern
+                              renderer: ({}: { caption: string; children: ReactElement }) => (
+                                  <div>Add tabs in order to place widgets here.</div>
+                              )
+                          },
+                          content: {
+                              widgetCount: 1,
+                              // eslint-disable-next-line no-empty-pattern
+                              renderer: ({}: { caption: string; children: ReactElement }) => (
+                                  <div>Add tabs in order to place widgets here.</div>
+                              )
+                          },
+                          sort: "1",
+                          visible: "true",
+                          // eslint-disable-next-line @typescript-eslint/no-empty-function
+                          onTabClick: () => {},
+                          badgeText: ""
+                      } as TabListPreviewType
+                  ]
+            : datasource !== undefined && datasource !== ""
+            ? [
+                  {
+                      captionType: captionTypeDynamic,
+                      captionText: captionTextDynamic,
+                      captionHTML: captionHTMLDynamic,
+                      captionContent: {
+                          widgetCount: 1,
+                          // eslint-disable-next-line no-empty-pattern
+                          renderer: ({}: { caption: string; children: ReactElement }) => (
+                              <div>Add tabs in order to place widgets here.</div>
+                          )
+                      },
+                      content: contentDynamic,
+                      sort: "1",
+                      visible: "true",
+                      // eslint-disable-next-line @typescript-eslint/no-empty-function
+                      onTabClick: () => {},
+                      badgeText: badgeTextDynamic
+                  } as TabListPreviewType
+              ]
+            : [
+                  {
+                      captionType: "text",
+                      captionText: "[No data source configured]",
+                      captionHTML: "",
+                      captionContent: {
+                          widgetCount: 1,
+                          // eslint-disable-next-line no-empty-pattern
+                          renderer: ({}: { caption: string; children: ReactElement }) => (
+                              <div>Add a data source in order to place widgets here.</div>
+                          )
+                      },
+                      content: {
+                          widgetCount: 1,
+                          // eslint-disable-next-line no-empty-pattern
+                          renderer: ({}: { caption: string; children: ReactElement }) => (
+                              <div>Add a data source in order to place widgets here.</div>
+                          )
+                      },
+                      sort: "1",
+                      visible: "true",
+                      // eslint-disable-next-line @typescript-eslint/no-empty-function
+                      onTabClick: () => {},
+                      badgeText: badgeTextDynamic
+                  } as TabListPreviewType
+              ];
+
+    const tabListAdjusted: Tab[] = tabListPreview.map((tabPreview, index): Tab => {
+        return {
+            captionType: tabPreview.captionType,
+            captionText: tabPreview.captionText,
+            captionHTML: tabPreview.captionHTML,
+            captionContent: (
+                <tabPreview.captionContent.renderer caption={`Place caption contents for TabCaption ${index} here.`}>
+                    <div />
+                </tabPreview.captionContent.renderer>
+            ),
+            onSelect: () => {},
+            badgeText: tabPreview.badgeText
+        };
+    });
 
     return (
-        <div className={"ctc"}>
-            <div className={"ctc-tabs"}>
-                {tabListType === "static" && adjustTabList !== undefined && (
-                    <Fragment>
-                        <span> Static w/ content</span>
-                        {adjustTabList.map((tab, index) => {
-                            <Tab
-                                key={index}
-                                isCurrentTab={index === 1}
-                                // eslint-disable-next-line @typescript-eslint/no-empty-function
-                                onTabClick={() => {}}
-                                tabCaptionType={tab.tabCaptionType}
-                                tabCaptionText={tab.tabCaptionText}
-                                tabCaptionHTML={tab.tabCaptionHTML}
-                                tabCaptionContent={<span className="mx-text">{tab.tabCaptionContent.widgetCount}</span>}
-                                // currentTabStyle={currentTabStyle}
-                                badgeStyle={tabBadgeStyle}
-                                badgeContent={tab.tabBadge}
-                            />;
-                        })}
-                    </Fragment>
-                )}
-                {tabListType === "static" && adjustTabList === undefined && (
-                    <Fragment>
-                        <span> Static w/p content</span>
-                        <Tab
-                            key={1}
-                            isCurrentTab={true}
-                            // eslint-disable-next-line @typescript-eslint/no-empty-function
-                            onTabClick={() => {}}
-                            tabCaptionType={"text"}
-                            tabCaptionText={"New Tab"}
-                            tabCaptionHTML={""}
-                            tabCaptionContent={noContent}
-                            // currentTabStyle={currentTabStyle}
-                            badgeStyle={tabBadgeStyle}
-                            badgeContent={""}
-                        />
-                    </Fragment>
-                )}
-                {tabListType === "dynamic" && (
-                    <Fragment>
-                        <span>Dynamic</span>
-                        <Tab
-                            key={1}
-                            isCurrentTab={true}
-                            // eslint-disable-next-line @typescript-eslint/no-empty-function
-                            onTabClick={() => {}}
-                            tabCaptionType={tabCaptionTypeDynamic}
-                            tabCaptionText={tabCaptionTextDynamic}
-                            tabCaptionHTML={tabCaptionHTMLDynamic}
-                            tabCaptionContent={noContent}
-                            // currentTabStyle={currentTabStyle}
-                            badgeStyle={tabBadgeStyle}
-                            badgeContent={tabBadgeDynamic}
-                        />
-                    </Fragment>
-                )}
-            </div>
-            {tabListType === "static" && adjustTabList !== undefined && <TabContent currentTabIndex={0} tab={adjustTabList[0]} />}
-            {tabListType === "static" && adjustTabList === undefined && { noContent }}
-            {tabListType === "dynamic" && (
-                <TabContent currentTabIndex={0} tab={<span className="mx-text">{tabContentDynamic.widgetCount}</span>} />
-            )}
+        <div className={`ctc ctc-${direction}`}>
+            <TabTags tabList={tabListAdjusted} currentTabIndex={0} badgeStyle={badgeStyle} badgeDirection={badgeDirection} />
+            {tabListPreview.map((tabPreview, index) => (
+                <TabContent
+                    currentTabIndex={0}
+                    tab={
+                        <tabPreview.content.renderer caption={`Place caption contents for Tab Caption ${index} here.`}>
+                            <div />
+                        </tabPreview.content.renderer>
+                    }
+                />
+            ))}
         </div>
     );
 }

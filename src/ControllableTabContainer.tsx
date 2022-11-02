@@ -1,55 +1,57 @@
 import { ReactElement, createElement, useState, useEffect, Fragment } from "react";
 import {
-    TabCaptionTypeDynamicEnum,
+    CaptionTypeDynamicEnum,
     ControllableTabContainerContainerProps,
     TabListType
-    // TabListTypeEnum
 } from "../typings/ControllableTabContainerProps";
 import { ValueStatus, ListValue, ListExpressionValue, ListWidgetValue, ListActionValue } from "mendix";
 import TabTags from "./components/TabTags";
 import TabContent from "./components/TabContent";
 import "./ui/ControllableTabContainer.css";
 import Big from "big.js";
+import { Tab } from "typings/General";
 
 const sortTabList = (a: TabListType, b: TabListType): number => {
-    if (a.tabSort.value !== undefined && b.tabSort.value !== undefined) {
-        const tabA = parseFloat(a.tabSort.value.toFixed(0));
-        const tabB = parseFloat(b.tabSort.value.toFixed(0));
+    if (a.sort.value !== undefined && b.sort.value !== undefined) {
+        const tabA = parseFloat(a.sort.value.toFixed(0));
+        const tabB = parseFloat(b.sort.value.toFixed(0));
         return tabA - tabB;
-    } else return 0;
+    } else {
+        return 0;
+    }
 };
 
 // Map the Dynamic tabs by datasource to the static type
-const convertDatasourceTabs = (
-    tabDatasource: ListValue,
-    tabCaptionTypeDynamic: TabCaptionTypeDynamicEnum,
-    tabCaptionTextDynamic: ListExpressionValue<string>,
-    tabCaptionHTMLDynamic: ListExpressionValue<string>,
-    tabContentDynamic: ListWidgetValue,
-    tabBadgeDynamic?: ListExpressionValue<string>,
+export const convertDatasourceTabs = (
+    datasource: ListValue,
+    captionTypeDynamic: CaptionTypeDynamicEnum,
+    captionTextDynamic: ListExpressionValue<string>,
+    captionHTMLDynamic: ListExpressionValue<string>,
+    contentDynamic: ListWidgetValue,
+    badgeTextDynamic?: ListExpressionValue<string>,
     onTabClickDynamic?: ListActionValue
 ): TabListType[] | undefined => {
     if (
-        tabDatasource !== undefined &&
-        tabDatasource.status === ValueStatus.Available &&
-        tabDatasource.items !== undefined
+        datasource !== undefined &&
+        datasource.status === ValueStatus.Available &&
+        datasource.items !== undefined
     ) {
-        return tabDatasource.items.map((objItem, index): TabListType => {
+        return datasource.items.map((objItem, index): TabListType => {
             return {
-                tabCaptionType: tabCaptionTypeDynamic,
-                tabCaptionText:
-                    tabCaptionTextDynamic !== undefined
-                        ? tabCaptionTextDynamic.get(objItem)
+                captionType: captionTypeDynamic,
+                captionText:
+                    captionTextDynamic !== undefined
+                        ? captionTextDynamic.get(objItem)
                         : { status: ValueStatus.Available, value: "" },
-                tabCaptionHTML:
-                    tabCaptionHTMLDynamic !== undefined
-                        ? tabCaptionHTMLDynamic.get(objItem)
+                captionHTML:
+                    captionHTMLDynamic !== undefined
+                        ? captionHTMLDynamic.get(objItem)
                         : { status: ValueStatus.Available, value: "" },
-                tabCaptionContent: undefined,
-                tabContent: tabContentDynamic.get(objItem),
-                tabSort: { status: ValueStatus.Available, value: new Big(index) },
-                tabVisible: { status: ValueStatus.Available, value: true },
-                tabBadge: tabBadgeDynamic?.get(objItem),
+                captionContent: undefined,
+                content: contentDynamic.get(objItem),
+                sort: { status: ValueStatus.Available, value: new Big(index) },
+                visible: { status: ValueStatus.Available, value: true },
+                badgeText: badgeTextDynamic?.get(objItem),
                 onTabClick: onTabClickDynamic?.get(objItem)
             };
         });
@@ -59,28 +61,27 @@ const convertDatasourceTabs = (
 export function ControllableTabContainer({
     defaultTabIndex,
     tabListType,
-    // currentTabStyle,
-    tabBadgeStyle,
+    badgeStyle,
     tabList,
-    tabDatasource,
-    tabCaptionTypeDynamic,
-    tabCaptionTextDynamic,
-    tabCaptionHTMLDynamic,
-    tabContentDynamic,
+    datasource,
+    captionTypeDynamic,
+    captionTextDynamic,
+    captionHTMLDynamic,
+    contentDynamic,
     onTabClickDynamic,
-    tabBadgeDynamic,
-    tabDirection,
+    badgeTextDynamic,
+    badgeDirection,
+    direction,
     name,
     style
 }: ControllableTabContainerContainerProps): ReactElement {
     const [tabListAdjusted, setTabListAdjusted] = useState<TabListType[]>();
     const [currentTabIndex, setCurrentTabIndex] = useState<number>();
-    const [currentTab, setCurrentTab] = useState<TabListType>();
+    const [currentTab, setCurrentTab] = useState<ReactElement>();
 
     // Handles if the current tab changes outside the widget - Set the Index
     useEffect(() => {
         if (defaultTabIndex.value !== undefined) {
-            // console.info("use effect - default tab changed", parseFloat(defaultTabIndex.value?.toFixed(0)));
             setCurrentTabIndex(parseFloat(defaultTabIndex.value?.toFixed(0)));
         }
     }, [defaultTabIndex.value]);
@@ -88,11 +89,9 @@ export function ControllableTabContainer({
     // When the Index changes, update the current tab state
     useEffect(() => {
         if (tabListAdjusted !== undefined && currentTabIndex !== undefined) {
-            // console.info("use effect - current tab index changed", currentTabIndex);
             const newCurrentTab = tabListAdjusted[currentTabIndex];
             if (newCurrentTab !== undefined) {
-                // console.info("use effect - current tab index changed - tab found:", newCurrentTab);
-                setCurrentTab(newCurrentTab);
+                setCurrentTab(newCurrentTab.content as ReactElement);
             } else {
                 setCurrentTab(undefined);
             }
@@ -102,31 +101,31 @@ export function ControllableTabContainer({
     // update the tab list from static source
     useEffect(() => {
         if (tabList.length > 0 && tabListType === "static") {
-            // console.info("use effect - tab list changed", tabList);
-            setTabListAdjusted(tabList.filter(tab => tab.tabVisible).sort(sortTabList));
+            setTabListAdjusted(tabList.filter(tab => tab.visible).sort(sortTabList));
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [tabList]);
 
     // update the tab list from dynamic source
     useEffect(() => {
-        if (tabListType === "dynamic" && tabDatasource.status === ValueStatus.Available) {
-            // console.info("use effect - datasource items changed", tabDatasource);
+        if (tabListType === "dynamic" && datasource.status === ValueStatus.Available) {
             setTabListAdjusted(
                 convertDatasourceTabs(
-                    tabDatasource,
-                    tabCaptionTypeDynamic,
-                    tabCaptionTextDynamic,
-                    tabCaptionHTMLDynamic,
-                    tabContentDynamic,
-                    tabBadgeDynamic,
+                    datasource,
+                    captionTypeDynamic,
+                    captionTextDynamic,
+                    captionHTMLDynamic,
+                    contentDynamic,
+                    badgeTextDynamic,
                     onTabClickDynamic
                 )
             );
         }
-    }, [tabDatasource]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [datasource]);
 
     // Event for when a different tab is clicked
-    const handleTabClick = (tab: TabListType, index: number) => {
+    const handleTabClick = (tab: TabListType, index: number): void => {
         if (index !== currentTabIndex) {
             if (tab.onTabClick !== undefined && tab.onTabClick.canExecute && tab.onTabClick.isExecuting === false) {
                 tab.onTabClick.execute();
@@ -136,22 +135,23 @@ export function ControllableTabContainer({
     };
 
     // Render
-    if (
-        currentTabIndex !== undefined &&
-        tabListAdjusted !== undefined &&
-        tabListAdjusted.length > 0
-    ) {
-        // console.info("render for real", { currentTabIndex, tabListAdjusted, currentTab });
+    if (currentTabIndex !== undefined && tabListAdjusted !== undefined && tabListAdjusted.length > 0) {
         return (
-            <div id={name} className={`ctc ctc-${tabDirection}`} style={style}>
+            <div id={name} className={`ctc ctc-${direction}`} style={style}>
                 <TabTags
-                    tabList={tabListAdjusted}
+                    tabList={tabListAdjusted.map((tab, index): Tab =>{ return {
+                        captionType: tab.captionType,
+                        captionText: tab.captionText.value as string,
+                        captionHTML: tab.captionHTML.value as string,
+                        captionContent: tab.captionContent,
+                        badgeText: tab.badgeText?.value,
+                        onSelect: () => handleTabClick(tab,index)
+                    }})}
                     currentTabIndex={currentTabIndex}
-                    // currentTabStyle={currentTabStyle}
-                    badgeStyle={tabBadgeStyle}
-                    onTabClick={(tab, index) => handleTabClick(tab, index)}
+                    badgeStyle={badgeStyle}
+                    badgeDirection={badgeDirection}
                 />
-                <TabContent currentTabIndex={currentTabIndex} tab={currentTab?.tabContent} />
+                <TabContent currentTabIndex={currentTabIndex} tab={currentTab} />
             </div>
         );
     } else {

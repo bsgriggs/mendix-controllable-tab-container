@@ -1,34 +1,39 @@
 import { ReactElement, createElement } from "react";
-import { 
-    // CurrentTabStyleEnum, 
-    TabBadgeStyleEnum, TabListType } from "typings/ControllableTabContainerProps";
+import {
+    BadgeDirectionEnum,
+    BadgeStyleEnum,
+} from "typings/ControllableTabContainerProps";
 import TabTag from "./TabTag";
+import {Tab} from "../../typings/General";
+
 
 type tabTagsProps = {
-    tabList: TabListType[];
+    tabList: Tab[];
     currentTabIndex: number;
-    // currentTabStyle: CurrentTabStyleEnum;
-    badgeStyle: TabBadgeStyleEnum;
-    onTabClick: (tab: TabListType, index: number) => void;
+    badgeStyle: BadgeStyleEnum;
+    badgeDirection: BadgeDirectionEnum;
 };
 
-function TabTags({ tabList, currentTabIndex, onTabClick,
-    //  currentTabStyle, 
-     badgeStyle }: tabTagsProps): ReactElement {
+function TabTags({
+    tabList,
+    currentTabIndex,
+    badgeStyle,
+    badgeDirection
+}: tabTagsProps): ReactElement {
     return (
         <div className={"ctc-tab-tags"}>
             {tabList.map((tab, index) => (
                 <TabTag
                     key={index}
                     isCurrentTab={currentTabIndex === index}
-                    onTabClick={() => onTabClick(tab, index)}
-                    tabCaptionType={tab.tabCaptionType}
-                    tabCaptionText={tab.tabCaptionText.value as string}
-                    tabCaptionHTML={tab.tabCaptionHTML.value as string}
-                    tabCaptionContent={tab.tabCaptionContent}
-                    // currentTabStyle={currentTabStyle}
+                    onSelect={() => tab.onSelect()}
+                    captionType={tab.captionType}
+                    captionText={tab.captionText}
+                    captionHTML={tab.captionHTML}
+                    captionContent={tab.captionContent}
                     badgeStyle={badgeStyle}
-                    badgeContent={tab.tabBadge?.value as string}
+                    badgeText={tab.badgeText}
+                    badgeDirection={badgeDirection}
                 />
             ))}
         </div>

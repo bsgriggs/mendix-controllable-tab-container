@@ -6,11 +6,11 @@ type tabContentProps = {
     tab?: ReactNode;
 };
 
-function Tab({currentTabIndex, tab }: tabContentProps): ReactElement {
+function Tab({ currentTabIndex, tab }: tabContentProps): ReactElement {
     if (tab !== undefined) {
         return <div className={"ctc-tab"}>{tab}</div>;
     } else {
-        return <NoTabContent currentTabIndex={currentTabIndex}/>;
+        return <NoTabContent currentTabIndex={currentTabIndex} />;
     }
 }
 export default Tab;

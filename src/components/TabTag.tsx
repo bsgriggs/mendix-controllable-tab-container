@@ -1,46 +1,44 @@
-import { ReactElement, createElement, ReactNode } from "react";
-import {
-    //  CurrentTabStyleEnum, 
-    TabBadgeStyleEnum, TabCaptionTypeEnum } from "../../typings/ControllableTabContainerProps";
+import { ReactElement, createElement } from "react";
+import { BadgeDirectionEnum, BadgeStyleEnum, CaptionTypeEnum } from "../../typings/ControllableTabContainerProps";
 import Badge from "./Badge";
 
 type tabTagProps = {
     isCurrentTab: boolean;
-    tabCaptionType: TabCaptionTypeEnum;
-    tabCaptionText: string;
-    tabCaptionHTML: string;
-    tabCaptionContent: ReactNode;
-    // currentTabStyle: CurrentTabStyleEnum;
-    badgeStyle: TabBadgeStyleEnum;
-    badgeContent?: string;
-    onTabClick: () => void;
+    captionType: CaptionTypeEnum;
+    captionText: string;
+    captionHTML: string;
+    captionContent: ReactElement;
+    badgeStyle: BadgeStyleEnum;
+    badgeText?: string;
+    badgeDirection: BadgeDirectionEnum;
+    onSelect: () => void;
 };
 
 function TabTag({
     isCurrentTab,
-    tabCaptionType,
-    tabCaptionContent,
-    tabCaptionText,
-    tabCaptionHTML,
-    onTabClick,
-    // currentTabStyle,
+    captionType,
+    captionContent,
+    captionText,
+    captionHTML,
+    onSelect,
     badgeStyle,
-    badgeContent
+    badgeText,
+    badgeDirection
 }: tabTagProps): ReactElement {
-    const renderCaption = (): ReactNode => {
-        switch (tabCaptionType) {
+    const renderCaption = (): ReactElement => {
+        switch (captionType) {
             case "text":
-                return <span className="mx-text">{tabCaptionText}</span>;
+                return <span className="mx-text">{captionText}</span>;
             case "html":
                 return (
                     <span
                         dangerouslySetInnerHTML={{
-                            __html: tabCaptionHTML
+                            __html: captionHTML
                         }}
                     ></span>
                 );
             case "custom":
-                return tabCaptionContent;
+                return captionContent;
         }
     };
 
@@ -48,13 +46,13 @@ function TabTag({
         <div
             className={
                 isCurrentTab
-                    ? "ctc-tab-tag ctc-tab-tag-active"
-                    : "ctc-tab-tag"
+                    ? `ctc-tab-tag ctc-tab-tag-active ctc-badge-${badgeDirection}`
+                    : `ctc-tab-tag ctc-badge-${badgeDirection}`
             }
-            onClick={() => onTabClick()}
+            onClick={() => onSelect()}
         >
             {renderCaption()}
-            <Badge badgeStyle={badgeStyle} badgeContent={badgeContent} />
+            <Badge style={badgeStyle} text={badgeText} />
         </div>
     );
 }

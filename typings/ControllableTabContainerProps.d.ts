@@ -9,35 +9,37 @@ import { Big } from "big.js";
 
 export type TabListTypeEnum = "static" | "dynamic";
 
-export type TabCaptionTypeEnum = "text" | "html" | "custom";
+export type CaptionTypeEnum = "text" | "html" | "custom";
 
 export interface TabListType {
-    tabCaptionType: TabCaptionTypeEnum;
-    tabCaptionText: DynamicValue<string>;
-    tabCaptionHTML: DynamicValue<string>;
-    tabCaptionContent: ReactNode;
-    tabVisible: DynamicValue<boolean>;
-    tabSort: DynamicValue<Big>;
-    tabContent: ReactNode;
-    tabBadge?: DynamicValue<string>;
+    captionType: CaptionTypeEnum;
+    captionText: DynamicValue<string>;
+    captionHTML: DynamicValue<string>;
+    captionContent: ReactNode;
+    visible: DynamicValue<boolean>;
+    sort: DynamicValue<Big>;
+    content: ReactNode;
+    badgeText?: DynamicValue<string>;
     onTabClick?: ActionValue;
 }
 
-export type TabCaptionTypeDynamicEnum = "text" | "html";
+export type CaptionTypeDynamicEnum = "text" | "html";
 
-export type TabBadgeStyleEnum = "default" | "inverse" | "primary" | "info" | "success" | "warning" | "danger";
+export type BadgeStyleEnum = "default" | "inverse" | "primary" | "info" | "success" | "warning" | "danger";
 
-export type TabDirectionEnum = "top" | "right" | "bottom" | "left";
+export type BadgeDirectionEnum = "top" | "right" | "bottom" | "left";
+
+export type DirectionEnum = "top" | "right" | "bottom" | "left";
 
 export interface TabListPreviewType {
-    tabCaptionType: TabCaptionTypeEnum;
-    tabCaptionText: string;
-    tabCaptionHTML: string;
-    tabCaptionContent: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
-    tabVisible: string;
-    tabSort: string;
-    tabContent: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
-    tabBadge: string;
+    captionType: CaptionTypeEnum;
+    captionText: string;
+    captionHTML: string;
+    captionContent: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    visible: string;
+    sort: string;
+    content: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    badgeText: string;
     onTabClick: {} | null;
 }
 
@@ -49,15 +51,16 @@ export interface ControllableTabContainerContainerProps {
     defaultTabIndex: DynamicValue<Big>;
     tabListType: TabListTypeEnum;
     tabList: TabListType[];
-    tabDatasource: ListValue;
-    tabCaptionTypeDynamic: TabCaptionTypeDynamicEnum;
-    tabCaptionTextDynamic: ListExpressionValue<string>;
-    tabCaptionHTMLDynamic: ListExpressionValue<string>;
-    tabContentDynamic: ListWidgetValue;
-    tabBadgeDynamic?: ListExpressionValue<string>;
+    datasource: ListValue;
+    captionTypeDynamic: CaptionTypeDynamicEnum;
+    captionTextDynamic: ListExpressionValue<string>;
+    captionHTMLDynamic: ListExpressionValue<string>;
+    contentDynamic: ListWidgetValue;
+    badgeTextDynamic?: ListExpressionValue<string>;
     onTabClickDynamic?: ListActionValue;
-    tabBadgeStyle: TabBadgeStyleEnum;
-    tabDirection: TabDirectionEnum;
+    badgeStyle: BadgeStyleEnum;
+    badgeDirection: BadgeDirectionEnum;
+    direction: DirectionEnum;
 }
 
 export interface ControllableTabContainerPreviewProps {
@@ -68,13 +71,14 @@ export interface ControllableTabContainerPreviewProps {
     defaultTabIndex: string;
     tabListType: TabListTypeEnum;
     tabList: TabListPreviewType[];
-    tabDatasource: {} | { type: string } | null;
-    tabCaptionTypeDynamic: TabCaptionTypeDynamicEnum;
-    tabCaptionTextDynamic: string;
-    tabCaptionHTMLDynamic: string;
-    tabContentDynamic: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
-    tabBadgeDynamic: string;
+    datasource: {} | { type: string } | null;
+    captionTypeDynamic: CaptionTypeDynamicEnum;
+    captionTextDynamic: string;
+    captionHTMLDynamic: string;
+    contentDynamic: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    badgeTextDynamic: string;
     onTabClickDynamic: {} | null;
-    tabBadgeStyle: TabBadgeStyleEnum;
-    tabDirection: TabDirectionEnum;
+    badgeStyle: BadgeStyleEnum;
+    badgeDirection: BadgeDirectionEnum;
+    direction: DirectionEnum;
 }
