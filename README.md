@@ -37,7 +37,8 @@ Tab container that allows dynamically controlling which tab is shown by default 
 
 #### Style
 8. Set the Badge style to the brand color you would like to use.
-9. Set tab direction as where you want the tabs to be listed in relation to the tab's content.  
+9. Set the Badge direction as where you whant the badge to appear next to the tab's caption.
+10. Set tab direction as where you want the tabs to be listed in relation to the tab's content.  
 ![style](https://github.com/bsgriggs/mendix-controllable-tab-container/blob/media/style.png)  
 
 
