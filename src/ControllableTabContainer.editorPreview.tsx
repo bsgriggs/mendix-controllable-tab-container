@@ -1,8 +1,8 @@
-import { ReactElement, createElement } from "react";
+import { ReactElement, createElement, Fragment } from "react";
 import { ControllableTabContainerPreviewProps, TabListPreviewType } from "../typings/ControllableTabContainerProps";
 import TabContent from "./components/TabContent";
 import TabTags from "./components/TabTags";
-import {Tab} from "../typings/General";
+import { Tab } from "../typings/General";
 
 export function preview({
     tabListType,
@@ -17,7 +17,7 @@ export function preview({
     badgeTextDynamic,
     badgeDirection
 }: ControllableTabContainerPreviewProps): ReactElement {
-    //filter out any that are not visible then sort
+    // filter out any that are not visible then sort
     const tabListPreview: TabListPreviewType[] =
         tabListType === "static"
             ? tabList.length > 0
@@ -102,10 +102,11 @@ export function preview({
             captionText: tabPreview.captionText,
             captionHTML: tabPreview.captionHTML,
             captionContent: (
-                <tabPreview.captionContent.renderer caption={`Place caption contents for TabCaption ${index} here.`}>
+                <tabPreview.captionContent.renderer caption={`Place caption contents for Tab ${index} Caption here.`}>
                     <div />
                 </tabPreview.captionContent.renderer>
             ),
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
             onSelect: () => {},
             badgeText: tabPreview.badgeText
         };
@@ -113,16 +114,25 @@ export function preview({
 
     return (
         <div className={`ctc ctc-${direction}`}>
-            <TabTags tabList={tabListAdjusted} currentTabIndex={0} badgeStyle={badgeStyle} badgeDirection={badgeDirection} />
             {tabListPreview.map((tabPreview, index) => (
-                <TabContent
-                    currentTabIndex={0}
-                    tab={
-                        <tabPreview.content.renderer caption={`Place caption contents for Tab Caption ${index} here.`}>
-                            <div />
-                        </tabPreview.content.renderer>
-                    }
-                />
+                <Fragment key={index}>
+                    <TabTags
+                        tabList={tabListAdjusted}
+                        currentTabIndex={index}
+                        badgeStyle={badgeStyle}
+                        badgeDirection={badgeDirection}
+                    />
+                    <TabContent
+                        currentTabIndex={0}
+                        tab={
+                            <tabPreview.content.renderer
+                                caption={`Place caption contents for Tab ${index} Content here.`}
+                            >
+                                <div />
+                            </tabPreview.content.renderer>
+                        }
+                    />
+                </Fragment>
             ))}
         </div>
     );

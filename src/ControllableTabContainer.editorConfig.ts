@@ -55,7 +55,7 @@ export function getProperties(
                 "contentDynamic",
                 "badgeTextDynamic"
             ]);
-            _values.tabList.map((tab, index): void => {
+            _values.tabList.forEach((tab, index) => {
                 // remove based on Tab Type
                 switch (tab.captionType) {
                     case "text":
@@ -180,9 +180,7 @@ export function getPreview(
                                             type: "Text",
                                             content:
                                                 "TAB: " +
-                                                (tab.captionType === "text"
-                                                    ? tab.captionText
-                                                    : tab.captionHTML),
+                                                (tab.captionType === "text" ? tab.captionText : tab.captionHTML),
                                             fontSize: 10,
                                             bold: true,
                                             fontColor: isDarkMode ? "#DEDEDE" : "#6B707B"
@@ -209,8 +207,7 @@ export function getPreview(
                                       type: "DropZone",
                                       property: tab.content,
                                       placeholder:
-                                          (tab.captionType === "text" ? tab.captionText : tab.captionHTML) +
-                                          " Content"
+                                          (tab.captionType === "text" ? tab.captionText : tab.captionHTML) + " Content"
                                   } as DropZoneProps
                               ]
                           }

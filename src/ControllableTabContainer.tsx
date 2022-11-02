@@ -31,11 +31,7 @@ export const convertDatasourceTabs = (
     badgeTextDynamic?: ListExpressionValue<string>,
     onTabClickDynamic?: ListActionValue
 ): TabListType[] | undefined => {
-    if (
-        datasource !== undefined &&
-        datasource.status === ValueStatus.Available &&
-        datasource.items !== undefined
-    ) {
+    if (datasource !== undefined && datasource.status === ValueStatus.Available && datasource.items !== undefined) {
         return datasource.items.map((objItem, index): TabListType => {
             return {
                 captionType: captionTypeDynamic,
@@ -139,14 +135,16 @@ export function ControllableTabContainer({
         return (
             <div id={name} className={`ctc ctc-${direction}`} style={style}>
                 <TabTags
-                    tabList={tabListAdjusted.map((tab, index): Tab =>{ return {
-                        captionType: tab.captionType,
-                        captionText: tab.captionText.value as string,
-                        captionHTML: tab.captionHTML.value as string,
-                        captionContent: tab.captionContent,
-                        badgeText: tab.badgeText?.value,
-                        onSelect: () => handleTabClick(tab,index)
-                    }})}
+                    tabList={tabListAdjusted.map((tab, index): Tab => {
+                        return {
+                            captionType: tab.captionType,
+                            captionText: tab.captionText.value as string,
+                            captionHTML: tab.captionHTML.value as string,
+                            captionContent: tab.captionContent,
+                            badgeText: tab.badgeText?.value,
+                            onSelect: () => handleTabClick(tab, index)
+                        };
+                    })}
                     currentTabIndex={currentTabIndex}
                     badgeStyle={badgeStyle}
                     badgeDirection={badgeDirection}

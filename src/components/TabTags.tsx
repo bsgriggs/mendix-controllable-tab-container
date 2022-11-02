@@ -1,11 +1,7 @@
 import { ReactElement, createElement } from "react";
-import {
-    BadgeDirectionEnum,
-    BadgeStyleEnum,
-} from "typings/ControllableTabContainerProps";
+import { BadgeDirectionEnum, BadgeStyleEnum } from "typings/ControllableTabContainerProps";
 import TabTag from "./TabTag";
-import {Tab} from "../../typings/General";
-
+import { Tab } from "../../typings/General";
 
 type tabTagsProps = {
     tabList: Tab[];
@@ -14,12 +10,7 @@ type tabTagsProps = {
     badgeDirection: BadgeDirectionEnum;
 };
 
-function TabTags({
-    tabList,
-    currentTabIndex,
-    badgeStyle,
-    badgeDirection
-}: tabTagsProps): ReactElement {
+function TabTags({ tabList, currentTabIndex, badgeStyle, badgeDirection }: tabTagsProps): ReactElement {
     return (
         <div className={"ctc-tab-tags"}>
             {tabList.map((tab, index) => (

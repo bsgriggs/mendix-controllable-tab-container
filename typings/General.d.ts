@@ -3,6 +3,6 @@ export type Tab = {
     captionText: string;
     captionHTML: string;
     captionContent: ReactElement;
-    onSelect: ()=>void;
+    onSelect: () => void;
     badgeText?: string;
-}
+};
