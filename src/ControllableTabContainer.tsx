@@ -129,7 +129,7 @@ export function ControllableTabContainer({
     const handleTabClick = (tab: TabListType, index: number) => {
         if (index !== currentTabIndex) {
             if (tab.onTabClick !== undefined && tab.onTabClick.canExecute && tab.onTabClick.isExecuting === false) {
-                tab.onTabClick.execute;
+                tab.onTabClick.execute();
             }
             setCurrentTabIndex(index);
         }
