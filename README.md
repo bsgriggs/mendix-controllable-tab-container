@@ -14,7 +14,7 @@ Tab container that allows dynamically controlling which tab is shown by default 
 
 ## Usage
 ![tabs-static](https://github.com/bsgriggs/mendix-controllable-tab-container/blob/media/tabs-static.png)
-1. If you need to have the tab container controlled by another object, set the Default Tab Index. The first tab is index 0. When the default tab index is changed by another widget (like a button), the tab container will automatically update.
+1. If you need to have the tab container controlled by another object, set the Default Tab Index. The first tab is index 0. When the default tab index is changed by another widget (like a button), the tab container will automatically update, but the tab container **will not automitcally update the parent's attribute**. In this case, you will need to use On Click actions.
 2. Decide whether you need to have a static list of tabs or a dynamic list based on data source. 
 
 #### Static
@@ -27,7 +27,7 @@ Tab container that allows dynamically controlling which tab is shown by default 
 
 #### Dynamic
 ![tabs-dynamic](https://github.com/bsgriggs/mendix-controllable-tab-container/blob/media/tabs-static.png)  
-3. Create a data source that returns objects like the following entity
+3. Create a data source that returns objects like the following entity  
 ![dynamic-entity](https://github.com/bsgriggs/mendix-controllable-tab-container/blob/media/dynamic-entity.png)  
 4. Set the Caption type to either Text or HTML
 5. Set Caption Text / Caption HTML and Tab Badge to the attributes from the entity above. It uses the branding color defined in the Style tab.
@@ -37,7 +37,7 @@ Tab container that allows dynamically controlling which tab is shown by default 
 
 #### Style
 8. Set the Badge style to the brand color you would like to use.
-9. Set tab direction as where you want the tabs to be listed in relation to the tab's content.
+9. Set tab direction as where you want the tabs to be listed in relation to the tab's content.  
 ![style](https://github.com/bsgriggs/mendix-controllable-tab-container/blob/media/style.png)  
 
 
