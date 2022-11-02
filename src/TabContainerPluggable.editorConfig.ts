@@ -120,25 +120,30 @@ export function getPreview(
 ): StructurePreviewProps | null {
     const imageContainer:ImageProps = {
         type: "Image",
-        width: 24,
-        height: 24,
+        width: 20,
+        height: 20,
         data: "iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAICSURBVHgB7Zu9TsMwFIVPCgikClAHYGCp2BgYmOAB2HkLNgY2xAMgNoaOPETbHalsrGwwdWOApQFUCSGg5Ia2CsH5cXAcG99PulXVVLr2iROfHCnAN82gekENghqVUO1xjyTK7J/VOzxY1sSjNUgYiI7+Sb1DOiU3j1avwv6i3vDGB3XhB9WI/aarv6i3dgEmPaPo7B/vjVnRv0YjNWPyPA9FUNE/b+8aHIcFgOOwAHAcFgD6iTu0X9AW9tfK6D19PhAaoap9gCbIGW67LABx5boAvusCiJ8FVKFKSFWITojz22DmCrh/+MDxuY/b/htehtWd0b3dBZwcLGN9bQYqSb0H0OT3Dx8rnXiUpXoNndZKYRGkL4HTiydjJk88Dz+D1TiASlIFuLx+hWnc9d+hklQBFuvmbWO0ClSSKsDmxhxMg26GKkkV4OyoYdQqoLHQTqCSVAHobtttrSpXXRaa+M7WfDgWrdvgf4OdoABrnKAseZ2jVU5QlrhztN4JypLHOVrnBGXJco7WOUFZspyjdU5QliwPY5UTlCWPc7TCCcoi4xzZCcJxOBMEZ4LJcCbImSBngjANzgQ5E+RMsDDsBAVwJgjOBJPhTJAzQc4EYTucCXImyJngFHaCAqp4bc4oaAX4cBgS4Abu0qWPJvS8PG1a/Xihmr60LRi0qon3JpP/AhBYFWL5eqrZAAAAAElFTkSuQmCC"
     }
     const titleHeader: RowLayoutProps = {
         type: "RowLayout",
-        columnSize: "grow",
-        backgroundColor: isDarkMode ? "#4F4F4F" : "#F5F5F5",
+        backgroundColor: isDarkMode ? "#3B5C8F" : "#DAEFFB",
+        borders: true,
         borderWidth: 1,
+        columnSize: "fixed",
         children: [
-            imageContainer,
             {
                 type: "Container",
-                padding: 8,
+                padding: 4,
+                children: [imageContainer]
+            },
+            {
+                type: "Container",
+                padding: 4,
                 children: [
                     {
                         type: "Text",
                         content: "Tab Container Pluggable",
-                        fontColor: isDarkMode ? "#DEDEDE" : "#6B707B"
+                        fontColor: isDarkMode ? "#6DB1FE" : "#2074C8"
                     } as TextProps
                 ]
             }
@@ -170,7 +175,7 @@ export function getPreview(
                                                     : tab.tabCaptionHTML),
                                             fontSize: 10,
                                             bold: true,
-                                            fontColor: isDarkMode ? "#DEDEDE" : "#000000"
+                                            fontColor: isDarkMode ? "#DEDEDE" : "#6B707B"
                                         }
                                       : {
                                             type: "Container",
@@ -180,7 +185,7 @@ export function getPreview(
                                                     content: `Tab ${index} Caption`,
                                                     fontSize: 10,
                                                     bold: true,
-                                                    fontColor: isDarkMode ? "#DEDEDE" : "#000000"
+                                                    fontColor: isDarkMode ? "#DEDEDE" : "#6B707B"
                                                 },
                                                 {
                                                     type: "DropZone",
@@ -212,14 +217,14 @@ export function getPreview(
                               {
                                   type: "Text",
                                   content:
-                                      "TAB: " +
+                                      "Dynamic TAB: " +
                                       //   (values.tabDatasource !== null && values.tabDatasource.type !== undefined ? values.tabDatasource.type : "") +
                                       (values.tabCaptionTypeDynamic === "text"
                                           ? values.tabCaptionTextDynamic
                                           : values.tabCaptionHTMLDynamic),
                                   fontSize: 10,
                                   bold: true,
-                                  fontColor: isDarkMode ? "#DEDEDE" : "#000000"
+                                  fontColor: isDarkMode ? "#DEDEDE" : "#6B707B"
                               },
                               {
                                   type: "DropZone",

@@ -124,7 +124,7 @@
             </property>
         </propertyGroup>
         <propertyGroup caption="Style">
-            <property key="currentTabStyle" type="enumeration" defaultValue="default">
+            <!-- <property key="currentTabStyle" type="enumeration" defaultValue="default">
                 <caption>Current Tab Style</caption>
                 <description></description>
                 <enumerationValues>
@@ -136,8 +136,8 @@
                     <enumerationValue key="warning">Warning</enumerationValue>
                     <enumerationValue key="danger">Danger</enumerationValue>
                 </enumerationValues>
-            </property>
-            <property key="tabBadgeStyle" type="enumeration" defaultValue="default">
+            </property> -->
+            <property key="tabBadgeStyle" type="enumeration" defaultValue="primary">
                 <caption>Badge Style</caption>
                 <description></description>
                 <enumerationValues>

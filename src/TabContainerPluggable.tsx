@@ -1,16 +1,15 @@
-import { ReactElement, createElement, useState, useEffect } from "react";
+import { ReactElement, createElement, useState, useEffect, Fragment } from "react";
 import {
     TabCaptionTypeDynamicEnum,
     TabContainerPluggableContainerProps,
-    TabListType,
-    TabListTypeEnum
+    TabListType
+    // TabListTypeEnum
 } from "../typings/TabContainerPluggableProps";
 import { ValueStatus, ListValue, ListExpressionValue, ListWidgetValue, ListActionValue } from "mendix";
 import TabTags from "./components/TabTags";
 import TabContent from "./components/TabContent";
 import "./ui/TabContainerPluggable.css";
 import Big from "big.js";
-import LoadingTabContainer from "./components/LoadingTabContainer";
 
 const sortTabList = (a: TabListType, b: TabListType): number => {
     if (a.tabSort.value !== undefined && b.tabSort.value !== undefined) {
@@ -18,31 +17,6 @@ const sortTabList = (a: TabListType, b: TabListType): number => {
         const tabB = parseFloat(b.tabSort.value.toFixed(0));
         return tabA - tabB;
     } else return 0;
-};
-
-//filter out any that are not visible then sort
-const adjustTabList = (
-    tabListType: TabListTypeEnum,
-    tabList: TabListType[],
-    tabDatasource: ListValue,
-    tabCaptionTypeDynamic: TabCaptionTypeDynamicEnum,
-    tabCaptionTextDynamic: ListExpressionValue<string>,
-    tabCaptionHTMLDynamic: ListExpressionValue<string>,
-    tabContentDynamic: ListWidgetValue,
-    tabBadgeDynamic?: ListExpressionValue<string>,
-    onTabClickDynamic?: ListActionValue
-): TabListType[] | undefined => {
-    return tabListType === "static"
-        ? tabList.filter(tab => tab.tabVisible).sort(sortTabList)
-        : convertDatasourceTabs(
-              tabDatasource,
-              tabCaptionTypeDynamic,
-              tabCaptionTextDynamic,
-              tabCaptionHTMLDynamic,
-              tabContentDynamic,
-              tabBadgeDynamic,
-              onTabClickDynamic
-          );
 };
 
 // Map the Dynamic tabs by datasource to the static type
@@ -85,7 +59,7 @@ const convertDatasourceTabs = (
 export function TabContainerPluggable({
     defaultTabIndex,
     tabListType,
-    currentTabStyle,
+    // currentTabStyle,
     tabBadgeStyle,
     tabList,
     tabDatasource,
@@ -103,19 +77,21 @@ export function TabContainerPluggable({
     const [currentTabIndex, setCurrentTabIndex] = useState<number>();
     const [currentTab, setCurrentTab] = useState<TabListType>();
 
+    // Handles if the current tab changes outside the widget - Set the Index
     useEffect(() => {
         if (defaultTabIndex.value !== undefined) {
-            console.info("use effect - default tab changed", defaultTabIndex);
+            // console.info("use effect - default tab changed", parseFloat(defaultTabIndex.value?.toFixed(0)));
             setCurrentTabIndex(parseFloat(defaultTabIndex.value?.toFixed(0)));
         }
     }, [defaultTabIndex.value]);
 
+    // When the Index changes, update the current tab state
     useEffect(() => {
         if (tabListAdjusted !== undefined && currentTabIndex !== undefined) {
-            console.info("use effect - current tab index changed", currentTabIndex);
+            // console.info("use effect - current tab index changed", currentTabIndex);
             const newCurrentTab = tabListAdjusted[currentTabIndex];
             if (newCurrentTab !== undefined) {
-                console.info("use effect - current tab index changed - tab found:", newCurrentTab);
+                // console.info("use effect - current tab index changed - tab found:", newCurrentTab);
                 setCurrentTab(newCurrentTab);
             } else {
                 setCurrentTab(undefined);
@@ -123,23 +99,33 @@ export function TabContainerPluggable({
         }
     }, [currentTabIndex, tabListAdjusted]);
 
+    // update the tab list from static source
     useEffect(() => {
-        console.info("use effect - tab list changed", { tabList, tabDatasource });
-        setTabListAdjusted(
-            adjustTabList(
-                tabListType,
-                tabList,
-                tabDatasource,
-                tabCaptionTypeDynamic,
-                tabCaptionTextDynamic,
-                tabCaptionHTMLDynamic,
-                tabContentDynamic,
-                tabBadgeDynamic,
-                onTabClickDynamic
-            )
-        );
-    }, [tabList, tabDatasource?.items]);
+        if (tabList.length > 0 && tabListType === "static") {
+            // console.info("use effect - tab list changed", tabList);
+            setTabListAdjusted(tabList.filter(tab => tab.tabVisible).sort(sortTabList));
+        }
+    }, [tabList]);
 
+    // update the tab list from dynamic source
+    useEffect(() => {
+        if (tabListType === "dynamic" && tabDatasource.status === ValueStatus.Available) {
+            // console.info("use effect - datasource items changed", tabDatasource);
+            setTabListAdjusted(
+                convertDatasourceTabs(
+                    tabDatasource,
+                    tabCaptionTypeDynamic,
+                    tabCaptionTextDynamic,
+                    tabCaptionHTMLDynamic,
+                    tabContentDynamic,
+                    tabBadgeDynamic,
+                    onTabClickDynamic
+                )
+            );
+        }
+    }, [tabDatasource]);
+
+    // Event for when a different tab is clicked
     const handleTabClick = (tab: TabListType, index: number) => {
         if (index !== currentTabIndex) {
             if (tab.onTabClick !== undefined && tab.onTabClick.canExecute && tab.onTabClick.isExecuting === false) {
@@ -149,14 +135,19 @@ export function TabContainerPluggable({
         }
     };
 
-    if (currentTabIndex !== undefined && tabListAdjusted !== undefined && tabListAdjusted.length > 0 && currentTab !== undefined) {
-        console.info("render for real", { currentTabIndex, tabListAdjusted, currentTab });
+    // Render
+    if (
+        currentTabIndex !== undefined &&
+        tabListAdjusted !== undefined &&
+        tabListAdjusted.length > 0
+    ) {
+        // console.info("render for real", { currentTabIndex, tabListAdjusted, currentTab });
         return (
             <div id={name} className={`tcp tcp-${tabDirection}`} style={style}>
                 <TabTags
                     tabList={tabListAdjusted}
                     currentTabIndex={currentTabIndex}
-                    currentTabStyle={currentTabStyle}
+                    // currentTabStyle={currentTabStyle}
                     badgeStyle={tabBadgeStyle}
                     onTabClick={(tab, index) => handleTabClick(tab, index)}
                 />
@@ -164,11 +155,6 @@ export function TabContainerPluggable({
             </div>
         );
     } else {
-        return (
-            <LoadingTabContainer
-                name={name}
-                style={style}
-            />
-        );
+        return <Fragment />;
     }
 }

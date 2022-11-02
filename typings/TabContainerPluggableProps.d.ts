@@ -25,8 +25,6 @@ export interface TabListType {
 
 export type TabCaptionTypeDynamicEnum = "text" | "html";
 
-export type CurrentTabStyleEnum = "default" | "inverse" | "primary" | "info" | "success" | "warning" | "danger";
-
 export type TabBadgeStyleEnum = "default" | "inverse" | "primary" | "info" | "success" | "warning" | "danger";
 
 export type TabDirectionEnum = "top" | "right" | "bottom" | "left";
@@ -58,7 +56,6 @@ export interface TabContainerPluggableContainerProps {
     tabContentDynamic: ListWidgetValue;
     tabBadgeDynamic?: ListExpressionValue<string>;
     onTabClickDynamic?: ListActionValue;
-    currentTabStyle: CurrentTabStyleEnum;
     tabBadgeStyle: TabBadgeStyleEnum;
     tabDirection: TabDirectionEnum;
 }
@@ -78,7 +75,6 @@ export interface TabContainerPluggablePreviewProps {
     tabContentDynamic: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
     tabBadgeDynamic: string;
     onTabClickDynamic: {} | null;
-    currentTabStyle: CurrentTabStyleEnum;
     tabBadgeStyle: TabBadgeStyleEnum;
     tabDirection: TabDirectionEnum;
 }

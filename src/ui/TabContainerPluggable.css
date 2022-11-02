@@ -1,70 +1,90 @@
+
 .tcp {
     display: flex;
 }
 .tcp .tcp-tab-tags {
     display: flex;
-    gap: 0.5em;
 }
 .tcp .tcp-tab-tags .mx-text {
     white-space: nowrap;
     width: fit-content;
 }
 .tcp .tcp-tab-tags .tcp-tab-tag {
-    position: relative;
+    display: flex;
+    padding: 10px 15px;
+    cursor: pointer;
+    color: #6c717e;
 }
+.tcp .tcp-tab-tags .tcp-tab-tag.tcp-tab-tag-active{
+    border: 1px solid #ced0d3;
+    background-color: transparent;
+}
+
 .tcp .tcp-tab-tags .tcp-tab-tag .tcp-badge {
-    padding: 2px;
-    border-radius: 4px;
-    position: absolute;
-    top: -10px;
-    right: -4px;
+    margin-left: 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1;
+    padding: 4px 8px;
+    cursor: default;
+    border: none;
 }
 .tcp .tcp-tab {
-    padding: 16px;
-    border: 1px solid #d7d7d7;
-    border-radius: 4px;
     width: 100%;
 }
 .tcp.tcp-top {
     flex-direction: column;
 }
-.tcp.tcp-top .tcp-tab-tags {
+.tcp.tcp-top > .tcp-tab-tags {
     flex-direction: row;
     align-items: flex-end;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #ddd;
 }
-.tcp.tcp-top .tcp-tab-tags .tcp-tab-tag {
+.tcp.tcp-top > .tcp-tab-tags .tcp-tab-tag {
     margin-bottom: -1px;
+    border-bottom-color: #fff;
+    border-radius: 4px 4px 0 0;
 }
 .tcp.tcp-right {
     flex-direction: row-reverse;
 }
-.tcp.tcp-right .tcp-tab-tags {
+.tcp.tcp-right > .tcp-tab-tags {
     flex-direction: column;
-    align-items: flex-end;
-    align-items: flex-end;
+    align-items: flex-start;
+    margin-left: 16px;
+    border-left: 1px solid #ddd;
 }
-.tcp.tcp-right .tcp-tab-tags .tcp-tab-tag {
+.tcp.tcp-right > .tcp-tab-tags .tcp-tab-tag {
     margin-left: -1px;
+    border-left-color: #fff;
+    border-radius: 0 4px 4px 0;
 }
 .tcp.tcp-bottom {
     flex-direction: column-reverse;
 }
-.tcp.tcp-bottom .tcp-tab-tags {
+.tcp.tcp-bottom > .tcp-tab-tags {
     flex-direction: row;
     align-items: flex-start;
-    align-items: flex-end;
+    margin-top: 16px;
+    border-top: 1px solid #ddd;
 }
-.tcp.tcp-bottom .tcp-tab-tags .tcp-tab-tag {
+.tcp.tcp-bottom > .tcp-tab-tags .tcp-tab-tag {
     margin-top: -1px;
+    border-top-color: #fff;
+    border-radius: 0 0 4px 4px;
 }
 .tcp.tcp-left {
     flex-direction: row;
 }
-.tcp.tcp-left .tcp-tab-tags {
+.tcp.tcp-left > .tcp-tab-tags {
     flex-direction: column;
     align-items: flex-end;
-    align-items: flex-end;
+    margin-right: 16px;
+    border-right: 1px solid #ddd;
 }
-.tcp.tcp-left .tcp-tab-tags .tcp-tab-tag {
+.tcp.tcp-left > .tcp-tab-tags .tcp-tab-tag {
     margin-right: -1px;
+    border-right-color: #fff;
+    border-radius: 4px 0 0 4px;
 }

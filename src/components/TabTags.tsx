@@ -1,16 +1,20 @@
 import { ReactElement, createElement } from "react";
-import { CurrentTabStyleEnum, TabBadgeStyleEnum, TabListType } from "typings/TabContainerPluggableProps";
+import { 
+    // CurrentTabStyleEnum, 
+    TabBadgeStyleEnum, TabListType } from "typings/TabContainerPluggableProps";
 import TabTag from "./TabTag";
 
 type tabTagsProps = {
     tabList: TabListType[];
     currentTabIndex: number;
-    currentTabStyle: CurrentTabStyleEnum;
+    // currentTabStyle: CurrentTabStyleEnum;
     badgeStyle: TabBadgeStyleEnum;
     onTabClick: (tab: TabListType, index: number) => void;
 };
 
-function TabTags({ tabList, currentTabIndex, onTabClick, currentTabStyle, badgeStyle }: tabTagsProps): ReactElement {
+function TabTags({ tabList, currentTabIndex, onTabClick,
+    //  currentTabStyle, 
+     badgeStyle }: tabTagsProps): ReactElement {
     return (
         <div className={"tcp-tab-tags"}>
             {tabList.map((tab, index) => (
@@ -22,7 +26,7 @@ function TabTags({ tabList, currentTabIndex, onTabClick, currentTabStyle, badgeS
                     tabCaptionText={tab.tabCaptionText.value as string}
                     tabCaptionHTML={tab.tabCaptionHTML.value as string}
                     tabCaptionContent={tab.tabCaptionContent}
-                    currentTabStyle={currentTabStyle}
+                    // currentTabStyle={currentTabStyle}
                     badgeStyle={badgeStyle}
                     badgeContent={tab.tabBadge?.value as string}
                 />

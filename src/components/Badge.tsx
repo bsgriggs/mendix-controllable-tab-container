@@ -8,7 +8,7 @@ type BadgeProps = {
 
 function Badge({ badgeStyle, badgeContent }: BadgeProps): ReactElement {
     if (badgeContent !== undefined && badgeContent?.trim() !== "") {
-        return <div className={`tcp-badge btn-sm btn-${badgeStyle}`}>{badgeContent}</div>;
+        return <div className={`tcp-badge btn mx-button btn-${badgeStyle}`}>{badgeContent}</div>;
     } else return <Fragment></Fragment>
 }
 export default Badge;
