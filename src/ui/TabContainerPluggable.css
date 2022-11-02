@@ -4,10 +4,7 @@
 }
 .tcp .tcp-tab-tags {
     display: flex;
-}
-.tcp .tcp-tab-tags .mx-text {
-    white-space: nowrap;
-    width: fit-content;
+    /* flex-wrap: wrap; */
 }
 .tcp .tcp-tab-tags .tcp-tab-tag {
     display: flex;
@@ -85,6 +82,6 @@
 }
 .tcp.tcp-left > .tcp-tab-tags .tcp-tab-tag {
     margin-right: -1px;
-    border-right-color: #fff;
+    /* border-right-color: #fff; */
     border-radius: 4px 0 0 4px;
 }
