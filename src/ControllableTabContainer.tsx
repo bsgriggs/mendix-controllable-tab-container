@@ -96,8 +96,16 @@ export function ControllableTabContainer({
 
     // update the tab list from static source
     useEffect(() => {
-        if (tabList.length > 0 && tabListType === "static") {
-            setTabListAdjusted(tabList.filter(tab => tab.visible).sort(sortTabList));
+        if (
+            tabListType === "static" &&
+            tabList.length > 0 &&
+            tabList.every(tab => tab.visible.status !== ValueStatus.Loading)
+        ) {
+            const visibleTabList = tabList.filter(tab => tab.visible.value === true);
+            if (currentTabIndex && currentTabIndex > visibleTabList.length - 1) {
+                setCurrentTabIndex(0);
+            }
+            setTabListAdjusted(visibleTabList.sort(sortTabList));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [tabList]);
@@ -105,17 +113,19 @@ export function ControllableTabContainer({
     // update the tab list from dynamic source
     useEffect(() => {
         if (tabListType === "dynamic" && datasource.status === ValueStatus.Available) {
-            setTabListAdjusted(
-                convertDatasourceTabs(
-                    datasource,
-                    captionTypeDynamic,
-                    captionTextDynamic,
-                    captionHTMLDynamic,
-                    contentDynamic,
-                    badgeTextDynamic,
-                    onTabClickDynamic
-                )
+            const convertedDynamicTabs = convertDatasourceTabs(
+                datasource,
+                captionTypeDynamic,
+                captionTextDynamic,
+                captionHTMLDynamic,
+                contentDynamic,
+                badgeTextDynamic,
+                onTabClickDynamic
             );
+            if (currentTabIndex && convertedDynamicTabs && currentTabIndex > convertedDynamicTabs.length - 1) {
+                setCurrentTabIndex(0);
+            }
+            setTabListAdjusted(convertedDynamicTabs);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [datasource]);
