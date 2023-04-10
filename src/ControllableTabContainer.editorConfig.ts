@@ -53,7 +53,8 @@ export function getProperties(
                 "captionHTMLDynamic",
                 "onTabClickDynamic",
                 "contentDynamic",
-                "badgeTextDynamic"
+                "badgeTextDynamic",
+                "disableTabChangeDynamic"
             ]);
             _values.tabList.forEach((tab, index) => {
                 // remove based on Tab Type
@@ -86,6 +87,7 @@ export function getProperties(
                     "captionHTML",
                     "captionContent",
                     "onTabClick",
+                    "disableTabChange",
                     "captionText",
                     "captionType",
                     "content",

@@ -20,6 +20,7 @@ export interface TabListType {
     sort: DynamicValue<Big>;
     content: ReactNode;
     badgeText?: DynamicValue<string>;
+    disableTabChange: boolean;
     onTabClick?: ActionValue;
 }
 
@@ -40,6 +41,7 @@ export interface TabListPreviewType {
     sort: string;
     content: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
     badgeText: string;
+    disableTabChange: boolean;
     onTabClick: {} | null;
 }
 
@@ -57,6 +59,7 @@ export interface ControllableTabContainerContainerProps {
     captionHTMLDynamic: ListExpressionValue<string>;
     contentDynamic: ListWidgetValue;
     badgeTextDynamic?: ListExpressionValue<string>;
+    disableTabChangeDynamic: boolean;
     onTabClickDynamic?: ListActionValue;
     badgeStyle: BadgeStyleEnum;
     badgeDirection: BadgeDirectionEnum;
@@ -77,6 +80,7 @@ export interface ControllableTabContainerPreviewProps {
     captionHTMLDynamic: string;
     contentDynamic: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
     badgeTextDynamic: string;
+    disableTabChangeDynamic: boolean;
     onTabClickDynamic: {} | null;
     badgeStyle: BadgeStyleEnum;
     badgeDirection: BadgeDirectionEnum;

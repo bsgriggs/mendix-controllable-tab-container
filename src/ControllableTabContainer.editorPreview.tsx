@@ -45,7 +45,8 @@ export function preview({
                           visible: "true",
                           // eslint-disable-next-line @typescript-eslint/no-empty-function
                           onTabClick: () => {},
-                          badgeText: ""
+                          badgeText: "",
+                          disableTabChange: false
                       } as TabListPreviewType
                   ]
             : datasource !== undefined && datasource !== ""
@@ -66,7 +67,8 @@ export function preview({
                       visible: "true",
                       // eslint-disable-next-line @typescript-eslint/no-empty-function
                       onTabClick: () => {},
-                      badgeText: badgeTextDynamic
+                      badgeText: badgeTextDynamic,
+                      disableTabChange: false
                   } as TabListPreviewType
               ]
             : [
@@ -92,7 +94,8 @@ export function preview({
                       visible: "true",
                       // eslint-disable-next-line @typescript-eslint/no-empty-function
                       onTabClick: () => {},
-                      badgeText: badgeTextDynamic
+                      badgeText: badgeTextDynamic,
+                      disableTabChange: false
                   } as TabListPreviewType
               ];
 

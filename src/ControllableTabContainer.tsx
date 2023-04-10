@@ -28,6 +28,7 @@ export const convertDatasourceTabs = (
     captionTextDynamic: ListExpressionValue<string>,
     captionHTMLDynamic: ListExpressionValue<string>,
     contentDynamic: ListWidgetValue,
+    disableTabChangeDynamic: boolean,
     badgeTextDynamic?: ListExpressionValue<string>,
     onTabClickDynamic?: ListActionValue
 ): TabListType[] | undefined => {
@@ -48,7 +49,8 @@ export const convertDatasourceTabs = (
                 sort: { status: ValueStatus.Available, value: new Big(index) },
                 visible: { status: ValueStatus.Available, value: true },
                 badgeText: badgeTextDynamic?.get(objItem),
-                onTabClick: onTabClickDynamic?.get(objItem)
+                onTabClick: onTabClickDynamic?.get(objItem),
+                disableTabChange: disableTabChangeDynamic
             };
         });
     }
@@ -68,6 +70,7 @@ export function ControllableTabContainer({
     badgeTextDynamic,
     badgeDirection,
     direction,
+    disableTabChangeDynamic,
     name,
     style
 }: ControllableTabContainerContainerProps): ReactElement {
@@ -119,6 +122,7 @@ export function ControllableTabContainer({
                 captionTextDynamic,
                 captionHTMLDynamic,
                 contentDynamic,
+                disableTabChangeDynamic,
                 badgeTextDynamic,
                 onTabClickDynamic
             );
@@ -136,7 +140,9 @@ export function ControllableTabContainer({
             if (tab.onTabClick !== undefined && tab.onTabClick.canExecute && tab.onTabClick.isExecuting === false) {
                 tab.onTabClick.execute();
             }
-            setCurrentTabIndex(index);
+            if (!tab.disableTabChange) {
+                setCurrentTabIndex(index);
+            }
         }
     };
 
