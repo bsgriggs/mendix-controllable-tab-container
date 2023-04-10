@@ -41,7 +41,8 @@ Tab container that allows dynamically controlling which tab is shown by default 
 10. Set tab direction as where you want the tabs to be listed in relation to the tab's content.  
 ![style](https://github.com/bsgriggs/mendix-controllable-tab-container/blob/media/style.png)  
 
-
+#### Tips
+1. Want to further customize what happens when the user clicks on a tab? You can use the Disable Tab Change setting and a On Click action to have full control of what happens when the user clicks a tab. 
 
 ## Demo project
 https://widgettesting105-sandbox.mxapps.io/p/controllable-tab-container
