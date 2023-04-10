@@ -27,6 +27,7 @@ export const convertDatasourceTabs = (
     captionTypeDynamic: CaptionTypeDynamicEnum,
     captionTextDynamic: ListExpressionValue<string>,
     captionHTMLDynamic: ListExpressionValue<string>,
+    captionContentDynamic: ListWidgetValue,
     contentDynamic: ListWidgetValue,
     disableTabChangeDynamic: boolean,
     badgeTextDynamic?: ListExpressionValue<string>,
@@ -44,7 +45,7 @@ export const convertDatasourceTabs = (
                     captionHTMLDynamic !== undefined
                         ? captionHTMLDynamic.get(objItem)
                         : { status: ValueStatus.Available, value: "" },
-                captionContent: undefined,
+                captionContent: captionContentDynamic.get(objItem),
                 content: contentDynamic.get(objItem),
                 sort: { status: ValueStatus.Available, value: new Big(index) },
                 visible: { status: ValueStatus.Available, value: true },
@@ -65,6 +66,7 @@ export function ControllableTabContainer({
     captionTypeDynamic,
     captionTextDynamic,
     captionHTMLDynamic,
+    captionContentDynamic,
     contentDynamic,
     onTabClickDynamic,
     badgeTextDynamic,
@@ -115,12 +117,13 @@ export function ControllableTabContainer({
 
     // update the tab list from dynamic source
     useEffect(() => {
-        if (tabListType === "dynamic" && datasource.status === ValueStatus.Available) {
+        if (tabListType === "dynamic" && datasource.status === ValueStatus.Available && captionContentDynamic) {
             const convertedDynamicTabs = convertDatasourceTabs(
                 datasource,
                 captionTypeDynamic,
                 captionTextDynamic,
                 captionHTMLDynamic,
+                captionContentDynamic,
                 contentDynamic,
                 disableTabChangeDynamic,
                 badgeTextDynamic,
@@ -136,10 +139,11 @@ export function ControllableTabContainer({
 
     // Event for when a different tab is clicked
     const handleTabClick = (tab: TabListType, index: number): void => {
+        console.log("clicked tab", tab);
+        if (tab.onTabClick !== undefined && tab.onTabClick.canExecute && tab.onTabClick.isExecuting === false) {
+            tab.onTabClick.execute();
+        }
         if (index !== currentTabIndex) {
-            if (tab.onTabClick !== undefined && tab.onTabClick.canExecute && tab.onTabClick.isExecuting === false) {
-                tab.onTabClick.execute();
-            }
             if (!tab.disableTabChange) {
                 setCurrentTabIndex(index);
             }

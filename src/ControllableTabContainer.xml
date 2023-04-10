@@ -95,7 +95,8 @@
                 <description></description>
                 <enumerationValues>
                     <enumerationValue key="text">Text</enumerationValue>
-                    <enumerationValue key="html">HTML</enumerationValue>
+                                <enumerationValue key="html">HTML</enumerationValue>
+                                <enumerationValue key="custom">Custom</enumerationValue>
                 </enumerationValues>
             </property>
             <property key="captionTextDynamic" type="textTemplate" dataSource="datasource">
@@ -111,6 +112,10 @@
                 <translations>
                     <translation lang="en_US">New Tab</translation>
                 </translations>
+            </property>
+            <property key="captionContentDynamic" type="widgets" dataSource="datasource" required="false">
+                <caption>Caption Content</caption>
+                <description></description>
             </property>
             <property key="contentDynamic" type="widgets" dataSource="datasource">
                 <caption>Content</caption>

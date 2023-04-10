@@ -24,7 +24,7 @@ export interface TabListType {
     onTabClick?: ActionValue;
 }
 
-export type CaptionTypeDynamicEnum = "text" | "html";
+export type CaptionTypeDynamicEnum = "text" | "html" | "custom";
 
 export type BadgeStyleEnum = "default" | "inverse" | "primary" | "info" | "success" | "warning" | "danger";
 
@@ -57,6 +57,7 @@ export interface ControllableTabContainerContainerProps {
     captionTypeDynamic: CaptionTypeDynamicEnum;
     captionTextDynamic: ListExpressionValue<string>;
     captionHTMLDynamic: ListExpressionValue<string>;
+    captionContentDynamic?: ListWidgetValue;
     contentDynamic: ListWidgetValue;
     badgeTextDynamic?: ListExpressionValue<string>;
     disableTabChangeDynamic: boolean;
@@ -78,6 +79,7 @@ export interface ControllableTabContainerPreviewProps {
     captionTypeDynamic: CaptionTypeDynamicEnum;
     captionTextDynamic: string;
     captionHTMLDynamic: string;
+    captionContentDynamic: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
     contentDynamic: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
     badgeTextDynamic: string;
     disableTabChangeDynamic: boolean;

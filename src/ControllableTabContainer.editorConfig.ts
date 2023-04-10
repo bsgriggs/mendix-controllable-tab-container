@@ -105,6 +105,8 @@ export function getProperties(
                 case "html":
                     hidePropertyIn(defaultProperties, _values, "captionTextDynamic");
                     break;
+                case "custom":
+                    hidePropertiesIn(defaultProperties, _values, ["captionHTMLDynamic", "captionTextDynamic"])
             }
     }
 
@@ -123,6 +125,14 @@ export function check(_values: ControllableTabContainerPreviewProps): Problem[] 
         });
     }
     */
+
+    if(_values.captionTypeDynamic === "custom" && _values.captionContentDynamic.widgetCount === 0){
+        errors.push({
+            property: `captionContentDynamic`,
+            message: `If caption type is custom, caption content is required`,
+            url: "https://github.com/bsgriggs/mendix-controllable-tab-container"
+        });
+    }
     return errors;
 }
 
@@ -146,7 +156,8 @@ export function getPreview(
             {
                 type: "Container",
                 padding: 4,
-                children: [imageContainer]
+                children: [imageContainer],
+                grow: 1
             },
             {
                 type: "Container",
@@ -157,7 +168,8 @@ export function getPreview(
                         content: "Controllable Tab Container",
                         fontColor: isDarkMode ? "#6DB1FE" : "#2074C8"
                     } as TextProps
-                ]
+                ],
+                grow: 7
             }
         ]
     };
@@ -223,17 +235,33 @@ export function getPreview(
                           borderWidth: 2,
                           padding: 8,
                           children: [
-                              {
+                            values.captionTypeDynamic !== "custom"
+                            ? {
                                   type: "Text",
                                   content:
-                                      "Dynamic TAB: " +
-                                      //   (values.datasource !== null && values.datasource.type !== undefined ? values.datasource.type : "") +
-                                      (values.captionTypeDynamic === "text"
-                                          ? values.captionTextDynamic
-                                          : values.captionHTMLDynamic),
+                                      "TAB: " +
+                                      (values.captionTypeDynamic === "text" ? values.captionTextDynamic : values.captionHTMLDynamic),
                                   fontSize: 10,
                                   bold: true,
                                   fontColor: isDarkMode ? "#DEDEDE" : "#6B707B"
+                              }
+                            : {
+                                  type: "Container",
+                                  children: [
+                                      {
+                                          type: "Text",
+                                          content: `Custom Tab Caption`,
+                                          fontSize: 10,
+                                          bold: true,
+                                          fontColor: isDarkMode ? "#DEDEDE" : "#6B707B"
+                                      },
+                                      {
+                                          type: "DropZone",
+                                          property: values.captionContentDynamic,
+                                          placeholder: `Custom Tab Caption`,
+                                          grow: 1
+                                      } as DropZoneProps
+                                  ]
                               },
                               {
                                   type: "DropZone",
