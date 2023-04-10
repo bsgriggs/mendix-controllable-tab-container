@@ -42,7 +42,8 @@ Tab container that allows dynamically controlling which tab is shown by default 
 ![style](https://github.com/bsgriggs/mendix-controllable-tab-container/blob/media/style.png)  
 
 #### Tips
-1. Want to further customize what happens when the user clicks on a tab? You can use the Disable Tab Change setting and a On Click action to have full control of what happens when the user clicks a tab. 
+- You can use the Disable Tab Change setting and an On Click action to further customize when the user clicks a tab. In the image below, I used Disable Tab Change to make the last tab a button that creates an object instead of showing that tab.  
+![disable-tab-change](https://github.com/bsgriggs/mendix-controllable-tab-container/blob/media/disable-tab-change.png)  
 
 ## Demo project
 https://widgettesting105-sandbox.mxapps.io/p/controllable-tab-container
