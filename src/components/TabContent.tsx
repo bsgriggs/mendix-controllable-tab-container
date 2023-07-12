@@ -7,15 +7,13 @@ type tabContentProps = {
     isLoading: boolean;
 };
 
-const Tab = ({ currentTabIndex, tab, isLoading }: tabContentProps): ReactElement => {
-    console.info(currentTabIndex, tab, isLoading);
-    return tab ? (
+const Tab = ({ currentTabIndex, tab, isLoading }: tabContentProps): ReactElement =>
+    tab ? (
         <div className={"ctc-tab"}>{tab}</div>
     ) : isLoading ? (
         <Fragment />
     ) : (
         <NoTabContent currentTabIndex={currentTabIndex} />
     );
-};
 
 export default Tab;
