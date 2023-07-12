@@ -8,26 +8,27 @@ type tabTagsProps = {
     currentTabIndex: number;
     badgeStyle: BadgeStyleEnum;
     badgeDirection: BadgeDirectionEnum;
+    tabIndex: number | undefined;
 };
 
-function TabTags({ tabList, currentTabIndex, badgeStyle, badgeDirection }: tabTagsProps): ReactElement {
-    return (
-        <div className={"ctc-tab-tags"}>
-            {tabList.map((tab, index) => (
-                <TabTag
-                    key={index}
-                    isCurrentTab={currentTabIndex === index}
-                    onSelect={() => tab.onSelect()}
-                    captionType={tab.captionType}
-                    captionText={tab.captionText}
-                    captionHTML={tab.captionHTML}
-                    captionContent={tab.captionContent}
-                    badgeStyle={badgeStyle}
-                    badgeText={tab.badgeText}
-                    badgeDirection={badgeDirection}
-                />
-            ))}
-        </div>
-    );
-}
+const TabTags = ({ tabList, currentTabIndex, badgeStyle, badgeDirection, tabIndex }: tabTagsProps): ReactElement => (
+    <div className={"ctc-tab-tags"}>
+        {tabList.map((tab, index) => (
+            <TabTag
+                key={index}
+                isCurrentTab={currentTabIndex === index}
+                onSelect={tab.onSelect}
+                captionType={tab.captionType}
+                captionText={tab.captionText}
+                captionHTML={tab.captionHTML}
+                captionContent={tab.captionContent}
+                badgeStyle={badgeStyle}
+                badgeText={tab.badgeText}
+                badgeDirection={badgeDirection}
+                tabIndex={tabIndex}
+            />
+        ))}
+    </div>
+);
+
 export default TabTags;

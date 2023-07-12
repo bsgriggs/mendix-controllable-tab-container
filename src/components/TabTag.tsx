@@ -1,4 +1,5 @@
-import { ReactElement, createElement } from "react";
+import { ReactElement, createElement, useMemo } from "react";
+import classNames from "classnames";
 import { BadgeDirectionEnum, BadgeStyleEnum, CaptionTypeEnum } from "../../typings/ControllableTabContainerProps";
 import Badge from "./Badge";
 
@@ -12,6 +13,7 @@ type tabTagProps = {
     badgeText?: string;
     badgeDirection: BadgeDirectionEnum;
     onSelect: () => void;
+    tabIndex: number | undefined;
 };
 
 function TabTag({
@@ -23,37 +25,34 @@ function TabTag({
     onSelect,
     badgeStyle,
     badgeText,
-    badgeDirection
+    badgeDirection,
+    tabIndex
 }: tabTagProps): ReactElement {
-    const renderCaption = (): ReactElement => {
-        switch (captionType) {
-            case "text":
-                return <span className="mx-text">{captionText}</span>;
-            case "html":
-                return (
-                    <span
-                        dangerouslySetInnerHTML={{
-                            __html: captionHTML
-                        }}
-                    ></span>
-                );
-            case "custom":
-                return captionContent;
-        }
-    };
+    const renderCaption = useMemo(
+        (): ReactElement =>
+            captionType === "text" ? (
+                <span className="mx-text">{captionText}</span>
+            ) : captionType === "html" ? (
+                <span
+                    dangerouslySetInnerHTML={{
+                        __html: captionHTML
+                    }}
+                ></span>
+            ) : (
+                captionContent
+            ),
+        [captionText, captionHTML, captionContent, captionType]
+    );
 
     return (
-        <div
-            className={
-                isCurrentTab
-                    ? `ctc-tab-tag ctc-tab-tag-active ctc-badge-${badgeDirection}`
-                    : `ctc-tab-tag ctc-badge-${badgeDirection}`
-            }
-            onClick={() => onSelect()}
+        <button
+            className={classNames(`ctc-tab-tag ctc-badge-${badgeDirection}`, { active: isCurrentTab })}
+            onClick={onSelect}
+            tabIndex={tabIndex}
         >
-            {renderCaption()}
+            {renderCaption}
             <Badge style={badgeStyle} text={badgeText} />
-        </div>
+        </button>
     );
 }
 export default TabTag;

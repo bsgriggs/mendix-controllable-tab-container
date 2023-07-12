@@ -1,36 +1,37 @@
 {
-  "name": "controllabletabcontainer",
-  "widgetName": "ControllableTabContainer",
-  "version": "1.2.1",
-  "description": "Tab container that allows dynamically controlling which tab is shown by default and other tabs are NOT rendered when hidden",
-  "copyright": "© Mendix Technology BV 2022. All rights reserved.",
-  "author": "Benjamin Griggs",
-  "engines": {
-    "node": ">=16"
-  },
-  "license": "MIT",
-  "config": {
-    "projectPath": "../../",
-    "mendixHost": "http://localhost:8082",
-    "developmentPort": 3000
-  },
-  "packagePath": "mendix",
-  "scripts": {
-    "start": "pluggable-widgets-tools start:server",
-    "dev": "pluggable-widgets-tools start:web",
-    "build": "pluggable-widgets-tools build:web",
-    "lint": "pluggable-widgets-tools lint",
-    "lint:fix": "pluggable-widgets-tools lint:fix",
-    "prerelease": "npm run lint",
-    "release": "pluggable-widgets-tools release:web"
-  },
-  "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "^9.0.0",
-    "@types/big.js": "^6.0.2",
-    "@types/react": "~17.0.1",
-    "@types/react-dom": "~17.0.1"
-  },
-  "dependencies": {
-    "typestyle": "^2.4.0"
-  }
+    "name": "controllabletabcontainer",
+    "widgetName": "ControllableTabContainer",
+    "version": "2.0.0",
+    "description": "Tab container that allows dynamically controlling which tab is shown by default and other tabs are NOT rendered when hidden",
+    "copyright": "© Mendix Technology BV 2022. All rights reserved.",
+    "author": "Benjamin Griggs",
+    "engines": {
+        "node": ">=14"
+    },
+    "license": "MIT",
+    "config": {
+        "projectPath": "../../",
+        "mendixHost": "http://localhost:8082",
+        "developmentPort": 3000
+    },
+    "packagePath": "mendix",
+    "scripts": {
+        "start": "pluggable-widgets-tools start:server",
+        "dev": "pluggable-widgets-tools start:web",
+        "build": "pluggable-widgets-tools build:web",
+        "lint": "pluggable-widgets-tools lint",
+        "lint:fix": "pluggable-widgets-tools lint:fix",
+        "prerelease": "npm run lint",
+        "release": "pluggable-widgets-tools release:web"
+    },
+    "devDependencies": {
+        "@mendix/pluggable-widgets-tools": "~9.6.2",
+        "@types/big.js": "^6.0.2",
+        "@types/react": "~17.0.1",
+        "@types/react-dom": "~17.0.1"
+    },
+    "dependencies": {
+        "classnames": "^2.3.2",
+        "typestyle": "^2.4.0"
+    }
 }

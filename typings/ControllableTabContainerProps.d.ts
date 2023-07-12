@@ -68,10 +68,8 @@ export interface ControllableTabContainerContainerProps {
 }
 
 export interface ControllableTabContainerPreviewProps {
-    className: string;
+    class: string;
     style: string;
-    styleObject?: CSSProperties;
-    readOnly: boolean;
     defaultTabIndex: string;
     tabListType: TabListTypeEnum;
     tabList: TabListPreviewType[];

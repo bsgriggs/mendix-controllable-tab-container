@@ -6,11 +6,11 @@ type BadgeProps = {
     text?: string;
 };
 
-function Badge({ style, text }: BadgeProps): ReactElement {
-    if (text !== undefined && text?.trim() !== "") {
-        return <div className={`ctc-badge btn mx-button btn-${style}`}>{text}</div>;
-    } else {
-        return <Fragment></Fragment>;
-    }
-}
+const Badge = ({ style, text }: BadgeProps): ReactElement =>
+    text !== undefined && text?.trim() !== "" ? (
+        <div className={`ctc-badge btn mx-button btn-${style}`}>{text}</div>
+    ) : (
+        <Fragment />
+    );
+
 export default Badge;

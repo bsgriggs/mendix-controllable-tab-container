@@ -124,6 +124,7 @@ export function preview({
                         currentTabIndex={index}
                         badgeStyle={badgeStyle}
                         badgeDirection={badgeDirection}
+                        tabIndex={0}
                     />
                     <TabContent
                         currentTabIndex={0}

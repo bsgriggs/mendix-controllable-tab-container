@@ -1,7 +1,4 @@
 /* eslint-disable */
-/**
- * TODO: Include tests for methods
- */
 import { Properties, Property, PropertyGroup } from "../ControllableTabContainer.editorConfig";
 
 declare type Option<T> = T | undefined;

@@ -1,7 +1,4 @@
-/**
- * Structure preview typings
- */
-
+/* eslint-disable */
 type BaseProps = {
     type: string;
     grow?: number;
