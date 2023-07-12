@@ -93,10 +93,8 @@ export function ControllableTabContainer({
     // Event for when a different tab is clicked
     const handleTabClick = (tab: TabListType, index: number): void => {
         tab.onTabClick?.execute();
-        if (index !== currentTabIndex) {
-            if (!tab.disableTabChange) {
-                setCurrentTabIndex(index);
-            }
+        if (!tab.disableTabChange) {
+            setCurrentTabIndex(index);
         }
     };
 
@@ -118,7 +116,11 @@ export function ControllableTabContainer({
                 badgeDirection={badgeDirection}
                 tabIndex={tabIndex}
             />
-            <TabContent currentTabIndex={currentTabIndex} tab={currentTab} />
+            <TabContent
+                currentTabIndex={currentTabIndex}
+                tab={currentTab}
+                isLoading={tabListType === "dynamic" ? datasource.status === ValueStatus.Loading : false}
+            />
         </div>
     );
 }

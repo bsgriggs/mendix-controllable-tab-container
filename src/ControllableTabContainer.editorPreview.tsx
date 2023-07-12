@@ -135,6 +135,7 @@ export function preview({
                                 <div />
                             </tabPreview.content.renderer>
                         }
+                        isLoading={false}
                     />
                 </Fragment>
             ))}
