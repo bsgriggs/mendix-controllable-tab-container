@@ -9,7 +9,9 @@ type tabContentProps = {
 
 const Tab = ({ currentTabIndex, tab, isLoading }: tabContentProps): ReactElement =>
     tab ? (
-        <div className={"ctc-tab"}>{tab}</div>
+        <div className={"ctc-tab"} key="test">
+            {tab}
+        </div>
     ) : isLoading ? (
         <Fragment />
     ) : (

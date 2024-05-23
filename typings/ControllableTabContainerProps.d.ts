@@ -1,7 +1,7 @@
 /**
  * This file was generated from ControllableTabContainer.xml
  * WARNING: All changes made to this file will be overwritten
- * @author Mendix UI Content Team
+ * @author Mendix Widgets Framework Team
  */
 import { ComponentType, CSSProperties, ReactNode } from "react";
 import { ActionValue, DynamicValue, ListValue, ListActionValue, ListExpressionValue, ListWidgetValue } from "mendix";
@@ -36,10 +36,10 @@ export interface TabListPreviewType {
     captionType: CaptionTypeEnum;
     captionText: string;
     captionHTML: string;
-    captionContent: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    captionContent: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     visible: string;
     sort: string;
-    content: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     badgeText: string;
     disableTabChange: boolean;
     onTabClick: {} | null;
@@ -68,17 +68,23 @@ export interface ControllableTabContainerContainerProps {
 }
 
 export interface ControllableTabContainerPreviewProps {
+    /**
+     * @deprecated Deprecated since version 9.18.0. Please use class property instead.
+     */
+    className: string;
     class: string;
     style: string;
+    styleObject?: CSSProperties;
+    readOnly: boolean;
     defaultTabIndex: string;
     tabListType: TabListTypeEnum;
     tabList: TabListPreviewType[];
-    datasource: {} | { type: string } | null;
+    datasource: {} | { caption: string } | { type: string } | null;
     captionTypeDynamic: CaptionTypeDynamicEnum;
     captionTextDynamic: string;
     captionHTMLDynamic: string;
-    captionContentDynamic: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
-    contentDynamic: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    captionContentDynamic: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
+    contentDynamic: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     badgeTextDynamic: string;
     disableTabChangeDynamic: boolean;
     onTabClickDynamic: {} | null;

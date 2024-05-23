@@ -57,8 +57,12 @@ export function ControllableTabContainer({
                               captionHTMLDynamic !== undefined
                                   ? captionHTMLDynamic.get(objItem)
                                   : { status: ValueStatus.Available, value: "" },
-                          captionContent: captionContentDynamic ? captionContentDynamic.get(objItem) : <Fragment />,
-                          content: contentDynamic.get(objItem),
+                          captionContent: captionContentDynamic ? (
+                              (captionContentDynamic.get(objItem) as ReactNode)
+                          ) : (
+                              <Fragment />
+                          ),
+                          content: contentDynamic.get(objItem) as ReactNode,
                           sort: { status: ValueStatus.Available, value: new Big(index) },
                           visible: { status: ValueStatus.Available, value: true },
                           badgeText: badgeTextDynamic?.get(objItem),
