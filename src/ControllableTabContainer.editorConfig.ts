@@ -176,22 +176,11 @@ export function getProperties(
 
 export function check(_values: ControllableTabContainerPreviewProps): Problem[] {
     const errors: Problem[] = [];
-    // Add errors to the above array to throw errors in Studio and Studio Pro.
-    /* Example
-    if (values.myProperty !== "custom") {
-        errors.push({
-            property: `myProperty`,
-            message: `The value of 'myProperty' is different of 'custom'.`,
-            url: "https://github.com/myrepo/mywidget"
-        });
-    }
-    */
-
     if (_values.captionTypeDynamic === "custom" && _values.captionContentDynamic.widgetCount === 0) {
         errors.push({
             property: `captionContentDynamic`,
             message: `If caption type is custom, caption content is required`,
-            url: "https://github.com/bsgriggs/mendix-controllable-tab-container"
+            url: "https://github.com/bsgriggs/mendix-controllable-tab-container/blob/main/README.md"
         });
     }
     return errors;
