@@ -1,6 +1,11 @@
 ## Controllable Tab Container
 Tab container that allows dynamically controlling which tab is shown by default and other tabs are NOT rendered when hidden.
 
+**Note before using:**
+- In Mendix [10.14.0+](https://docs.mendix.com/releasenotes/studio-pro/10.14/#10140) there is a new Default Tab attribute that allows the same functionality out-of-the-box.
+- If you need to contain Dojo-based components (e.g. Data Grid 1) or simply extend an existing tab container, use [TabPageSelector](https://marketplace.mendix.com/link/component/204732) instead.
+- Given the above facts, this widget will get deprecated after Mendix 10.24 LTS is released.
+
 ![demo image](https://github.com/bsgriggs/mendix-controllable-tab-container/blob/media/demo.png)
 
 ## Features
